@@ -1,0 +1,12 @@
+@import "styles/normalize.scss";
+@import "styles/root.scss";
+@import "styles/fonts.scss";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-primary);
+}
+
+p {
+  color: var(--color-on-surface);
+}

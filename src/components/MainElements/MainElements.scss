@@ -1,0 +1,11 @@
+body{
+    background: #181414;
+}
+
+.main-elements{
+
+
+    & &__container{
+        height: 100vh;
+    }
+}

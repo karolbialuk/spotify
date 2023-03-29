@@ -1,5 +1,13 @@
 import { React, useEffect, useState } from "react";
-import { Player, LogoutButton, LoginButton } from "../../components/index";
+
+import {
+  Player,
+  LogoutButton,
+  LoginButton,
+  LeftSidebar,
+  MainElements,
+  Navbar,
+} from "../../components/index";
 import "./HomePage.scss";
 
 const ParamsSpotifyAuth = (hash) => {
@@ -31,8 +39,14 @@ const HomePage = () => {
   if (token) {
     return (
       <>
+        <div className="root">
+          <LeftSidebar />
+          <div className="root__main-container">
+            <Navbar />
+            <MainElements />
+          </div>
+        </div>
         <Player token={token} />
-        <LogoutButton setToken={setToken} />
       </>
     );
   }

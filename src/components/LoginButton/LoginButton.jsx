@@ -19,7 +19,7 @@ const LoginButton = () => {
   };
   return (
     <>
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}>Zaloguj</button>
     </>
   );
 };

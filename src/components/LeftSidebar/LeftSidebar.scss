@@ -1,0 +1,54 @@
+.sidebar{
+        background: black;
+        min-width: 220px;
+    
+    & &__container{
+        position: sticky;
+        top: 25px;
+        
+        margin: 25px 25px;
+    }
+
+    & &__logo{
+        max-width: 130px;
+    }
+
+    img{
+        width: 100%;
+    }
+
+    & &__elements-container{
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        gap: 15px;
+
+            
+        
+    }
+
+    & &__playlist-container{
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+        margin-top: 15px;
+        border-top: 1px solid rgb(80, 80, 80);
+        padding-top: 15px;
+    }
+
+    & &__element{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #fff;
+        font-size: 13px;
+    }
+
+
+    & &__main-element-logo{
+        margin-right: 12px;
+        display: flex;
+        flex-direction: row;
+    }
+
+}

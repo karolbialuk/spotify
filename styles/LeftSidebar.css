@@ -1,0 +1,41 @@
+.sidebar {
+  background: black;
+  min-width: 220px;
+}
+.sidebar .sidebar__container {
+  position: sticky;
+  top: 25px;
+  margin: 25px 25px;
+}
+.sidebar .sidebar__logo {
+  max-width: 130px;
+}
+.sidebar img {
+  width: 100%;
+}
+.sidebar .sidebar__elements-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 15px;
+}
+.sidebar .sidebar__playlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin-top: 15px;
+  border-top: 1px solid rgb(80, 80, 80);
+  padding-top: 15px;
+}
+.sidebar .sidebar__element {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #fff;
+  font-size: 13px;
+}
+.sidebar .sidebar__main-element-logo {
+  margin-right: 12px;
+  display: flex;
+  flex-direction: row;
+}/*# sourceMappingURL=LeftSidebar.css.map */

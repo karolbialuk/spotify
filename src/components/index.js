@@ -1,3 +1,6 @@
 export { LogoutButton } from './LogoutButton/LogoutButton'
 export { LoginButton } from './LoginButton/LoginButton'
 export { Player } from './Player/Player'
+export { LeftSidebar } from './LeftSidebar/LeftSidebar'
+export { MainElements } from './MainElements/MainElements'
+export { Navbar } from './Navbar/Navbar'

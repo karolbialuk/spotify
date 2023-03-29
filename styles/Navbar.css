@@ -1,0 +1,9 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.navbar .navbar__container {
+  background-color: rgb(72, 32, 176);
+  min-height: 65px;
+}/*# sourceMappingURL=Navbar.css.map */

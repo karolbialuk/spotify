@@ -3,14 +3,82 @@
     top: 0;
     width: 100%;
 
+
     & &__container{
         background-color: rgb(72, 32, 176);
         min-height: 65px;
-       
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
     }
 
-    & &__left-sidebar{
-
+    & &__arrows{
+        height: 65px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        margin-left: 25px;
     }
+
+    & &__arrow-left{
+        background: #131313;
+        opacity: 0.85;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+    }
+
+    & &__arrow-right{
+        background: #131313;
+        opacity: 0.85;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+    }
+
+    & &__user-element{
+        margin-right: 25px;
+        background: #131313;
+        opacity: 0.85;
+        color: #fff;
+        width: 170px;
+        height: 40px;
+        border-radius: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3{
+            font-size: 0.8rem;
+            margin: 0;
+        }
+    }
+
+    & &__user-element-left{
+        width: 40px;
+        background: #000000;
+        border-radius: 50px;
+        height: 100%;
+    }
+
+    & &__user-element-right{
+        width: 30px;
+        height: 100%;
+        margin-right: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
 }

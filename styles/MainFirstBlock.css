@@ -1,0 +1,17 @@
+.main-first-block .main-first-block__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-left: 20px;
+}
+.main-first-block .main-first-block__element {
+  display: flex;
+  width: 95%;
+  height: 75px;
+  background: red;
+}
+.main-first-block .main-first-block__element-img {
+  width: 15%;
+}
+.main-first-block .main-first-block__element-text {
+  width: 85%;
+}/*# sourceMappingURL=MainFirstBlock.css.map */

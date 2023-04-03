@@ -5,8 +5,30 @@ import { AiOutlineHome, AiFillPlusSquare } from "react-icons/ai";
 import { SlMagnifier } from "react-icons/sl";
 import { BiLibrary } from "react-icons/bi";
 import { BsFillBagHeartFill } from "react-icons/bs";
+import LeftSidePlaylists from "./LeftSidePlaylists";
+import { useFetchUserPlaylistsQuery } from "../../store";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ token }) => {
+  const { data, error, isFetching } = useFetchUserPlaylistsQuery(token);
+
+  console.log(data);
+
+  let content;
+
+  if (isFetching) {
+    content = <div>Ładowanie</div>;
+  } else if (error) {
+    content = <div>Błąd podczas ładowania</div>;
+  } else {
+    content = data.items.map((album) => {
+      return (
+        <>
+          <LeftSidePlaylists key={album.id} album={album} />
+        </>
+      );
+    });
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebar__container">
@@ -49,28 +71,7 @@ const LeftSidebar = () => {
           </div>
         </div>
 
-        <div className="sidebar__playlist-container">
-          <div className="sidebar__element">
-            <div className="sidebar__main-element-text">
-              Fajna nazwa playlisty
-            </div>
-          </div>
-          <div className="sidebar__element">
-            <div className="sidebar__main-element-text">
-              Fajna nazwa playlisty
-            </div>
-          </div>
-          <div className="sidebar__element">
-            <div className="sidebar__main-element-text">
-              Fajna nazwa playlisty
-            </div>
-          </div>
-          <div className="sidebar__element">
-            <div className="sidebar__main-element-text">
-              Fajna nazwa playlisty
-            </div>
-          </div>
-        </div>
+        <div className="sidebar__playlist-container">{content}</div>
       </div>
     </div>
   );

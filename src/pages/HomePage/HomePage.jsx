@@ -40,10 +40,10 @@ const HomePage = () => {
     return (
       <>
         <div className="root">
-          <LeftSidebar />
+          <LeftSidebar token={token} />
           <div className="root__main-container">
             <Navbar />
-            <MainElements />
+            <MainElements token={token} />
           </div>
         </div>
         <Player token={token} />

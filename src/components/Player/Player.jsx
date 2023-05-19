@@ -1,8 +1,13 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import "./Player.scss";
 import SpotifyPlayer from "react-spotify-web-playback";
+import { useSelector, useDispatch } from "react-redux";
 
-const Player = ({ token }) => {
+const Player = ({ link, token }) => {
+  const id = useSelector((state) => {
+    return state.uri.id;
+  });
+
   return (
     <div className="player">
       <SpotifyPlayer
@@ -17,7 +22,8 @@ const Player = ({ token }) => {
           height: "10vh",
         }}
         token={token}
-        uris={["spotify:artist:6HQYnRM4OzToCYPpVBInuU"]}
+        uris={[id]}
+        layout="responsive"
       />
     </div>
   );

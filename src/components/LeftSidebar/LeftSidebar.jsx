@@ -7,6 +7,7 @@ import { BiLibrary } from "react-icons/bi";
 import { BsFillBagHeartFill } from "react-icons/bs";
 import LeftSidePlaylists from "./LeftSidePlaylists";
 import { useFetchUserPlaylistsQuery } from "../../store";
+import { Link } from "react-router-dom";
 
 const LeftSidebar = ({ token }) => {
   const { data, error, isFetching } = useFetchUserPlaylistsQuery(token);
@@ -23,7 +24,9 @@ const LeftSidebar = ({ token }) => {
     content = data.items.map((album) => {
       return (
         <>
-          <LeftSidePlaylists key={album.id} album={album} />
+          <Link style={{ textDecoration: "none" }} to={"/playlist/" + album.id}>
+            <LeftSidePlaylists key={album.id} album={album} />
+          </Link>
         </>
       );
     });
@@ -33,7 +36,9 @@ const LeftSidebar = ({ token }) => {
     <div className="sidebar">
       <div className="sidebar__container">
         <div className="sidebar__logo">
-          <img src={sidebarLogo} />
+          <Link to="/home">
+            <img src={sidebarLogo} />
+          </Link>
         </div>
         <div className="sidebar__elements-container">
           <div className="sidebar__element">

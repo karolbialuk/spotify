@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const MainFirstBlock = ({ token, query }) => {
   const { data, error, isFetching } = query(token);
-
   let content;
   if (isFetching) {
     content = <div>Ładowanie</div>;
@@ -16,7 +15,7 @@ const MainFirstBlock = ({ token, query }) => {
     content = data.playlists.items.map((album) => {
       return (
         <>
-          <Link to={"/playlist/" + album.id}>
+          <Link style={{ textDecoration: "none" }} to={"/playlist/" + album.id}>
             <FirstBlockItem key={album.id} album={album} />
           </Link>
         </>

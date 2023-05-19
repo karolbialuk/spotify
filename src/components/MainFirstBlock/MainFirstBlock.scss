@@ -1,5 +1,7 @@
 .main-first-block{
 
+   
+
     h1{
         color: #fff;
         font-size: 1.5rem;
@@ -52,5 +54,6 @@
     & &__element-text{
         margin-left: 10px;
         width: 75%;
+        text-decoration: none;
     }
 }

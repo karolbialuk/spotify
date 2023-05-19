@@ -51,6 +51,32 @@ const albumsApi = createApi({
           }
         },
       }),
+      fetchPlaylistSongs: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `playlists/${id}/tracks`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {},
+            market: 'PL',
+          }
+        },
+      }),
+      fetchPlaylistInfo: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `playlists/${id}`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {},
+            market: 'PL',
+          }
+        },
+      }),
     }
   },
 })
@@ -59,5 +85,7 @@ export const {
   useFetchCategoryPlaylistsQuery,
   useFetchFeaturedPlaylistsQuery,
   useFetchUserPlaylistsQuery,
+  useFetchPlaylistSongsQuery,
+  useFetchPlaylistInfoQuery,
 } = albumsApi
 export { albumsApi }

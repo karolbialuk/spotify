@@ -1,0 +1,112 @@
+.songs-list{
+
+    & &__element.active{
+        background: red;
+    }
+
+    button{
+        background: none;
+        border: none;
+        text-align: left;
+    }
+
+    & &__container{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0 25px;
+    }
+
+    & &__element{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     color: #fff;
+     width: 100%;
+    }
+
+
+    
+    
+    
+
+    & &__list-names{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #949494;
+        font-size: 0.9rem;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(114, 114, 114, 0.3);;
+    }
+
+    & &__list-first{
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-start;
+        width: 30%;
+    }
+
+    & &__list-second{
+        width: 30%;
+        display: flex;
+        justify-content: center;
+    }
+
+    & &__list-third{
+        width: 40%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    & &__number{
+
+    }
+
+    & &__title{
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: flex-start;
+        width: 30%;
+
+        h1{
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        p{
+            font-size: 0.8rem;
+            margin: 0;
+            color: #fff;
+        }
+    }
+
+    & &__title-img{
+
+        img{
+            width: 40px;
+        }
+
+    }
+
+    & &__title-text{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    & &__album{
+        width: 30%;
+        display: flex;
+        justify-content: center;
+    }
+
+    & &__time{
+        width: 40%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+

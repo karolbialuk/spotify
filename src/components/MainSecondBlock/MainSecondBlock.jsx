@@ -1,9 +1,11 @@
 import React from "react";
 import "./MainSecondBlock.scss";
 import SecondBlockItem from "./SecondBlockItem";
+import { Link } from "react-router-dom";
 
 const MainSecondBlock = ({ title, token, query, category }) => {
   const { data, isFetching, error } = query({ token, category });
+
   let content;
   if (isFetching) {
     content = <div>Ładowanie</div>;
@@ -13,7 +15,9 @@ const MainSecondBlock = ({ title, token, query, category }) => {
     content = data.playlists.items.map((album) => {
       return (
         <>
-          <SecondBlockItem key={album.id} album={album} />
+          <Link style={{ textDecoration: "none" }} to={"/playlist/" + album.id}>
+            <SecondBlockItem key={album.id} album={album} />
+          </Link>
         </>
       );
     });

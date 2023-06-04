@@ -1,24 +1,33 @@
 import { React, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { usePlayClickedSongMutation } from "../../store";
+import { changeId, changePlay } from "../../store";
 
-const SongListItem = ({ songs, number, link }) => {
+const SongListItem = ({ songs, number, token }) => {
   const [first, setFirst] = useState("");
   const { track } = songs;
-  const id = useSelector((state) => {
+
+  const dispatch = useDispatch();
+
+  const [playSong, playSongResults] = usePlayClickedSongMutation();
+
+  const player_id = useSelector((state) => {
     return state.uri.id;
   });
 
-  // const splitLink = () => {
-  //   if (link) {
-  //     return "spotify:track:" + link.href.split("/")[4];
-  //   } else {
-  //     return;
-  //   }
-  // };
+  const play_status = useSelector((state) => {
+    return state.uri.play;
+  });
 
-  // useEffect(() => {
-  //   console.log(link);
-  // }, [link]);
+  const handlePlaySong = () => {
+    const uri = [track.uri];
+    if (!player_id && !play_status) {
+      dispatch(changeId(track.uri));
+      dispatch(changePlay(true));
+    } else if (play_status) {
+      playSong({ uri, token });
+    }
+  };
 
   function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
@@ -27,13 +36,11 @@ const SongListItem = ({ songs, number, link }) => {
   }
 
   return (
-    <div
-      className={`songs-list__element ${track.uri === first ? "active" : ""}`}
-    >
+    <div className="songs-list__element" onClick={handlePlaySong}>
       <div className="songs-list__title">
         <div className="songs-list__number">{number}</div>
         <div className="songs-list__title-img">
-          <img src={track.album.images[2].url} />
+          {track.album.images[2] && <img src={track.album.images[2].url} />}
         </div>
         <div className="songs-list__title-text">
           <h1>{track.name}</h1>

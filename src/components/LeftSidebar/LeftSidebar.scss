@@ -23,6 +23,10 @@
         gap: 15px;
     }
 
+    & &__main-element-text{
+        color:#ffff;
+    }
+
     & &__playlist-container{
         display: flex;
         flex-direction: column;

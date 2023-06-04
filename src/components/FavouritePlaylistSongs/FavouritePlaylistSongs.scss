@@ -1,4 +1,4 @@
-.playlist-songs{
+.favourite-playlist-songs{
 
     & &__container{
         margin: 35px;
@@ -42,15 +42,16 @@
 
     & &__buttons{
         display: flex;
-        align-items: center;
         margin: 40px 0;
         gap: 20px;
         color: #fff;
+      
 
         button{
             background: none;
             border: none;
             cursor: pointer;
+            
         }
     }
 
@@ -64,14 +65,18 @@
         height: 55px;
         background: #20d464;
         z-index: -1;
-        position: relative;
         transform: rotate(90deg);
     }
-    & &__btn-second{
+    
 
+    & &__bottom-arrows{
+        display: flex;
+        margin-top: 20px;
+        justify-content: flex-start;
+        width: 30%;
+        position: relative;
+        bottom: 5px;
     }
 
-    & &__btn-third{
-
-    }
+    
 }

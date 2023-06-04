@@ -2,21 +2,39 @@ import { React, useState, useEffect } from "react";
 import "./SongsList.scss";
 import { BsClock } from "react-icons/bs";
 import SongListItem from "./SongListItem";
-import { useFetchPlaylistSongsQuery } from "../../store";
 
-const SongsList = ({ data2, isFetching2, error2, token }) => {
+const SongsList = ({ data, isFetching, error, token }) => {
   let number = 0;
+  const location = window.location.href.split("/")[3];
 
   let content;
-  if (isFetching2) {
+  if (isFetching) {
     content = <div>Ładowanie</div>;
-  } else if (error2) {
+  } else if (error) {
     content = <div>Wystąpił błąd</div>;
-  } else {
-    content = data2.tracks.items.map((songs) => {
+  } else if (location === "favourite") {
+    content = data.items.map((songs) => {
       return (
         <>
-          <SongListItem key={songs.id} songs={songs} number={(number += 1)} />
+          <SongListItem
+            key={songs.id}
+            token={token}
+            songs={songs}
+            number={(number += 1)}
+          />
+        </>
+      );
+    });
+  } else {
+    content = data.tracks.items.map((songs) => {
+      return (
+        <>
+          <SongListItem
+            key={songs.id}
+            token={token}
+            songs={songs}
+            number={(number += 1)}
+          />
         </>
       );
     });

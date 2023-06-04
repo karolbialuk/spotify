@@ -3,10 +3,16 @@ import "./Player.scss";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { useSelector, useDispatch } from "react-redux";
 
-const Player = ({ link, token }) => {
+const Player = ({ token }) => {
   const id = useSelector((state) => {
     return state.uri.id;
   });
+
+  const play = useSelector((state) => {
+    return state.uri.play;
+  });
+
+  console.log({ playerid: id });
 
   return (
     <div className="player">
@@ -21,6 +27,7 @@ const Player = ({ link, token }) => {
           trackNameColor: "#fff",
           height: "10vh",
         }}
+        play={play}
         token={token}
         uris={[id]}
         layout="responsive"

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const LeftSidebar = ({ token }) => {
   const { data, error, isFetching } = useFetchUserPlaylistsQuery(token);
 
-  console.log(data);
+  console.log({ lewe: data });
 
   let content;
 
@@ -72,7 +72,9 @@ const LeftSidebar = ({ token }) => {
             <div className="sidebar__main-element-logo">
               <BsFillBagHeartFill size={25} />
             </div>
-            <div className="sidebar__main-element-text">Polubione utwory</div>
+            <Link style={{ textDecoration: "none" }} to={"/favourite"}>
+              <div className="sidebar__main-element-text">Polubione utwory</div>
+            </Link>
           </div>
         </div>
 

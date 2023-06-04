@@ -4,36 +4,36 @@ import { BsFillTriangleFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { SongsList } from "../SongsList/SongsList";
+
 import {
   useFetchPlaylistInfoQuery,
   useFetchPlaylistSongsQuery,
+  usePlayClickedSongMutation,
 } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
-import { changeId, fetchSongs } from "../../store";
+import { changeId, changePlay } from "../../store";
 import { useLocation } from "react-router-dom";
 
-const PlaylistSongs = ({ token }) => {
+const PlaylistSongs = ({ token, devices }) => {
   const [id, setId] = useState("");
 
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const handleChangeUri = (id) => {
-    dispatch(changeId(id));
-  };
+  const handleChangeUri = () => {};
+
+  const [playSong, playSongResults] = usePlayClickedSongMutation();
 
   useEffect(() => {
     const playlistId = location.pathname.split("/")[2];
     setId(playlistId);
-    handleChangeUri("spotify:playlist:" + playlistId);
+    dispatch(changeId(""));
   }, [location]);
 
   const { data, isFetching, error } = useFetchPlaylistInfoQuery({
     token,
     id,
   });
-
-  console.log(id);
 
   const {
     data2 = data,
@@ -44,7 +44,24 @@ const PlaylistSongs = ({ token }) => {
     id,
   });
 
-  console.log({ data2: data2 });
+  const player_id = useSelector((state) => {
+    return state.uri.id;
+  });
+
+  const play_status = useSelector((state) => {
+    return state.uri.play;
+  });
+
+  const handlePlayMusic = () => {
+    const context = data2.uri;
+
+    if (!player_id && !play_status) {
+      dispatch(changeId(context));
+      dispatch(changePlay(true));
+    } else if (play_status) {
+      playSong({ token, context });
+    }
+  };
 
   if (isFetching) {
     return <div>Ładowanie</div>;
@@ -56,7 +73,7 @@ const PlaylistSongs = ({ token }) => {
         <div className="playlist-songs__container">
           <div className="playlist-songs__header">
             <div className="playlist-songs__img">
-              <img src={data.images[0].url} />
+              {data.images[0] && <img src={data.images[0].url} />}
             </div>
             <div className="playlist-songs__text">
               <h3>Playlista</h3>
@@ -67,12 +84,14 @@ const PlaylistSongs = ({ token }) => {
             </div>
           </div>
           <div className="playlist-songs__buttons">
-            <div className="playlist-songs__btn-first">
-              <BsFillTriangleFill
-                size={20}
-                style={{ bottom: "2px", position: "relative" }}
-              />
-            </div>
+            <button onClick={handlePlayMusic}>
+              <div className="playlist-songs__btn-first">
+                <BsFillTriangleFill
+                  size={20}
+                  style={{ bottom: "2px", position: "relative" }}
+                />
+              </div>
+            </button>
             <div className="playlist-songs__btn-second">
               <AiOutlineHeart size={40} />
             </div>
@@ -81,9 +100,9 @@ const PlaylistSongs = ({ token }) => {
             </div>
           </div>
           <SongsList
-            data2={data2}
-            isFetching2={isFetching2}
-            error2={error2}
+            data={data2}
+            isFetching={isFetching2}
+            error={error2}
             token={token}
           />
         </div>

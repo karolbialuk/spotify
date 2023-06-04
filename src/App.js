@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from 'react'
-import { LoginPage, HomePage, PlaylistPage } from './pages'
+import { LoginPage, HomePage, PlaylistPage, FavouritePage } from './pages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LeftSidebar, Navbar, Player } from './components'
+
 import './index.scss'
 
 const ParamsSpotifyAuth = (hash) => {
@@ -18,6 +19,7 @@ const ParamsSpotifyAuth = (hash) => {
 
 const App = () => {
   const [token, setToken] = useState('')
+
   useEffect(() => {
     if (window.location.hash) {
       const { access_token, expires_in, token_type } = ParamsSpotifyAuth(
@@ -43,6 +45,12 @@ const App = () => {
         <Route
           path="/playlist/:id"
           element={<PlaylistPage token={localStorage.getItem('accessToken')} />}
+        />
+        <Route
+          path="/favourite"
+          element={
+            <FavouritePage token={localStorage.getItem('accessToken')} />
+          }
         />
         <Route path="/" element={<LoginPage />} />
       </Routes>

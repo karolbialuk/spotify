@@ -12,6 +12,8 @@ const LoginButton = () => {
     "user-library-read",
     "user-read-recently-played",
     "playlist-read-private",
+    "user-library-read",
+    "user-library-modify",
   ];
   const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
   const CLIENT_ID = "ca7f379f2e7e42d5af1e29834f9483bd";

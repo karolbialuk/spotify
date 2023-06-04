@@ -77,6 +77,56 @@ const albumsApi = createApi({
           }
         },
       }),
+      fetchLikedSongs: builder.query({
+        query: ({ token, offset }) => {
+          return {
+            url: `/me/tracks`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              limit: '50',
+              offset: offset,
+            },
+            market: 'PL',
+          }
+        },
+      }),
+
+      playClickedSong: builder.mutation({
+        query: ({ uri, token, context }) => {
+          return {
+            url: '/me/player/play',
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+
+            body: {
+              uris: uri,
+              context_uri: context,
+            },
+          }
+        },
+      }),
+
+      activateDevice: builder.mutation({
+        query: ({ token, deviceId }) => {
+          return {
+            url: '/me/player/',
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+
+            body: {
+              device_ids: [deviceId],
+              play: true,
+            },
+          }
+        },
+      }),
     }
   },
 })
@@ -87,5 +137,8 @@ export const {
   useFetchUserPlaylistsQuery,
   useFetchPlaylistSongsQuery,
   useFetchPlaylistInfoQuery,
+  useFetchLikedSongsQuery,
+  usePlayClickedSongMutation,
+  useActivateDeviceMutation,
 } = albumsApi
 export { albumsApi }

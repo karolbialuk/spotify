@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { albumsApi } from './apis/albumsApi'
-import { uriReducer, changeId } from './slices/uriSlice'
+import { uriReducer, changeId, changePlay } from './slices/uriSlice'
 import { songReducer, changeSong } from './slices/songSlice'
 
 export const store = configureStore({
@@ -23,6 +23,9 @@ export {
   useFetchUserPlaylistsQuery,
   useFetchPlaylistSongsQuery,
   useFetchPlaylistInfoQuery,
+  useFetchLikedSongsQuery,
+  usePlayClickedSongMutation,
+  useActivateDeviceMutation,
 } from './apis/albumsApi'
 
-export { changeId, changeSong }
+export { changeId, changeSong, changePlay }

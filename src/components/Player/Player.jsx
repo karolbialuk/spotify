@@ -29,7 +29,7 @@ const Player = ({ token }) => {
         }}
         play={play}
         token={token}
-        uris={[id]}
+        uris={id}
         layout="responsive"
       />
     </div>

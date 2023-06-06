@@ -13,6 +13,17 @@
         margin: 0 25px;
     }
 
+    & &__like{
+        width: 80px;
+        cursor: pointer;
+        display: none;
+    }
+
+    & &__like.active{
+        display: block;
+        height: 5px;
+    }
+    
     & &__element{
      display: flex;
      align-items: center;
@@ -23,9 +34,14 @@
 
      &:hover{
         background: rgba(48, 48, 48, 0.507);
+        border-radius: 4px;
+
+        .songs-list__like{
+            display: block;
+            height: 5px;
+        }
      }
     }
-
 
     & &__list-names{
         display: flex;
@@ -67,7 +83,8 @@
     }
     
     & &__number{
-        width: 5%;
+        width: 8%;
+        margin-left: 10px;
     }
 
     & &__title{
@@ -119,6 +136,14 @@
         width: 40%;
         display: flex;
         justify-content: flex-end;
+    }
+
+    
+
+    & &__time-element{
+        margin-right: 10px;
+        text-align: center;
+        width: 50px;
     }
 }
 

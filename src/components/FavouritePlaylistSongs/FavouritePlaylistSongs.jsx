@@ -1,11 +1,15 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./FavouritePlaylistSongs.scss";
 import { BsFillTriangleFill } from "react-icons/bs";
 import { SongsList } from "../SongsList/SongsList";
-import { useFetchLikedSongsQuery } from "../../store";
+import {
+  useFetchLikedSongsQuery,
+  usePlayClickedSongMutation,
+} from "../../store";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { changeId, changePlay } from "../../store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const FavouritePlaylistSongs = ({ token }) => {
   const [offset, setOffset] = useState(0);
@@ -15,6 +19,9 @@ const FavouritePlaylistSongs = ({ token }) => {
   });
 
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [playSong, playSongResults] = usePlayClickedSongMutation();
 
   const incOff = () => {
     const newOffset = offset + 50;
@@ -30,18 +37,23 @@ const FavouritePlaylistSongs = ({ token }) => {
     }
   };
 
-  const handleChangeUri = (id) => {
-    dispatch(changeId(id));
-  };
+  const player_id = useSelector((state) => {
+    return state.uri.id;
+  });
 
-  console.log({ ezez: data });
+  const play_status = useSelector((state) => {
+    return state.uri.play;
+  });
 
   const handlePlayMusic = () => {
-    const id = data.items.map((item) => item.track.uri);
-    console.log(id);
-
-    handleChangeUri(id);
-    dispatch(changePlay(true));
+    const uri = data && data.items.map((item) => item.track.uri);
+    console.log(uri);
+    if (!player_id && !play_status) {
+      dispatch(changeId(uri));
+      dispatch(changePlay(true));
+    } else if (player_id) {
+      playSong({ uri, token });
+    }
   };
 
   return (

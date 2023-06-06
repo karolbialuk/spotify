@@ -94,6 +94,21 @@ const albumsApi = createApi({
         },
       }),
 
+      checkSavedTracks: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `/me/tracks/contains`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: id,
+            },
+          }
+        },
+      }),
+
       playClickedSong: builder.mutation({
         query: ({ uri, token, context }) => {
           return {
@@ -110,7 +125,6 @@ const albumsApi = createApi({
           }
         },
       }),
-
       activateDevice: builder.mutation({
         query: ({ token, deviceId }) => {
           return {
@@ -123,6 +137,34 @@ const albumsApi = createApi({
             body: {
               device_ids: [deviceId],
               play: true,
+            },
+          }
+        },
+      }),
+      likeSong: builder.mutation({
+        query: ({ token, id }) => {
+          return {
+            url: '/me/tracks/',
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: id,
+            },
+          }
+        },
+      }),
+      removeSong: builder.mutation({
+        query: ({ token, id }) => {
+          return {
+            url: '/me/tracks/',
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: id,
             },
           }
         },
@@ -140,5 +182,8 @@ export const {
   useFetchLikedSongsQuery,
   usePlayClickedSongMutation,
   useActivateDeviceMutation,
+  useLikeSongMutation,
+  useCheckSavedTracksQuery,
+  useRemoveSongMutation,
 } = albumsApi
 export { albumsApi }

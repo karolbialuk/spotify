@@ -26,6 +26,9 @@ export {
   useFetchLikedSongsQuery,
   usePlayClickedSongMutation,
   useActivateDeviceMutation,
+  useLikeSongMutation,
+  useCheckSavedTracksQuery,
+  useRemoveSongMutation,
 } from './apis/albumsApi'
 
 export { changeId, changeSong, changePlay }

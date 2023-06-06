@@ -1,15 +1,46 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { usePlayClickedSongMutation } from "../../store";
+import {
+  usePlayClickedSongMutation,
+  useLikeSongMutation,
+  useRemoveSongMutation,
+  useCheckSavedTracksQuery,
+} from "../../store";
 import { changeId, changePlay } from "../../store";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 const SongListItem = ({ songs, number, token }) => {
-  const [first, setFirst] = useState("");
   const { track } = songs;
+
+  const [isLiked, setisLiked] = useState(false);
 
   const dispatch = useDispatch();
 
+  const id = track.id;
+
   const [playSong, playSongResults] = usePlayClickedSongMutation();
+  const [likeSong, likeSongResults] = useLikeSongMutation();
+  const [removeSong, removeSongResults] = useRemoveSongMutation();
+  const { data, isFetching, error } = useCheckSavedTracksQuery({ token, id });
+
+  const handleLike = async ({ id, e }) => {
+    e.stopPropagation();
+    const el = document.getElementById(id);
+
+    if (data.toString() === "false") {
+      await likeSong({ token, id });
+    } else if (data.toString() === "true") {
+      await removeSong({ token, id });
+    }
+
+    if (el.classList.contains("active")) {
+      el.classList.remove("active");
+    } else if (!el.classList.contains("active")) {
+      el.classList.add("active");
+    }
+
+    setisLiked((prevIsLiked) => !prevIsLiked);
+  };
 
   const player_id = useSelector((state) => {
     return state.uri.id;
@@ -56,7 +87,23 @@ const SongListItem = ({ songs, number, token }) => {
       </div>
       <div className="songs-list__album">{track.album.name}</div>
       <div className="songs-list__time">
-        {millisToMinutesAndSeconds(track.duration_ms)}
+        <button
+          className={`songs-list__like ${
+            data && data.toString() === "true" ? "active" : ""
+          }`}
+          id={track.id}
+          onClick={(e) => handleLike({ id, e })}
+        >
+          {data && data.toString() === "false" ? (
+            <AiFillHeart color={isLiked ? "green" : "white"} size={20} />
+          ) : (
+            <AiFillHeart color={isLiked ? "white" : "green"} size={20} />
+          )}
+        </button>
+
+        <div className="songs-list__time-element">
+          {millisToMinutesAndSeconds(track.duration_ms)}
+        </div>
       </div>
     </div>
   );

@@ -20,14 +20,11 @@ const PlaylistSongs = ({ token, devices }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const handleChangeUri = () => {};
-
   const [playSong, playSongResults] = usePlayClickedSongMutation();
 
   useEffect(() => {
     const playlistId = location.pathname.split("/")[2];
     setId(playlistId);
-    dispatch(changeId(""));
   }, [location]);
 
   const { data, isFetching, error } = useFetchPlaylistInfoQuery({
@@ -53,13 +50,14 @@ const PlaylistSongs = ({ token, devices }) => {
   });
 
   const handlePlayMusic = () => {
-    const context = data2.uri;
+    const uri = data2 && data2.tracks.items.map((item) => item.track.uri);
+    console.log("tojestto", uri);
 
     if (!player_id && !play_status) {
-      dispatch(changeId(context));
+      dispatch(changeId(uri));
       dispatch(changePlay(true));
     } else if (play_status) {
-      playSong({ token, context });
+      playSong({ uri, token });
     }
   };
 

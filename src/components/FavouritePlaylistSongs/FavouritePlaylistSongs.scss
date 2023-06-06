@@ -45,6 +45,7 @@
         margin: 40px 0;
         gap: 20px;
         color: #fff;
+        
       
 
         button{
@@ -64,6 +65,7 @@
         width: 55px;
         height: 55px;
         background: #20d464;
+        position: relative;
         z-index: -1;
         transform: rotate(90deg);
     }
@@ -74,7 +76,6 @@
         margin-top: 20px;
         justify-content: flex-start;
         width: 30%;
-        position: relative;
         bottom: 5px;
     }
 

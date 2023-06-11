@@ -2,6 +2,7 @@
     position: sticky;
     top: 0;
     width: 100%;
+    
 
 
     & &__container{
@@ -81,4 +82,56 @@
     }
 
 
+}
+
+.searchbar{
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    
+
+
+    & &__container{
+        background-color: #181414;
+        min-height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0 15px 25px;
+    }
+
+
+    & &__input{
+        width: 100%;
+        padding: 12px 24px;
+        background-color: transparent;
+        transition: transform 250ms ease-in-out;
+        font-size: 14px;
+        line-height: 18px;
+        color: #c4c4c4;
+        background-color: transparent;
+        border-radius: 50px;
+        border: 1px solid #c4c4c4;
+        transition: all 250ms ease-in-out;
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+        
+        &::placeholder {
+            color: #c4c4c4;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        &:hover,
+        &:focus {
+            padding: 12px 0;
+            outline: 0;
+            border: 1px solid transparent;
+            border-bottom: 1px solid #c4c4c4;
+            border-radius: 0;
+            background-position: 100% center;
+        }
+    
+    }
 }

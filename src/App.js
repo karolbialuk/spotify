@@ -1,5 +1,12 @@
 import { React, useEffect, useState } from 'react'
-import { LoginPage, HomePage, PlaylistPage, FavouritePage } from './pages'
+import {
+  LoginPage,
+  HomePage,
+  PlaylistPage,
+  FavouritePage,
+  SearchPage,
+  CategoryPage,
+} from './pages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LeftSidebar, Navbar, Player } from './components'
 
@@ -51,6 +58,14 @@ const App = () => {
           element={
             <FavouritePage token={localStorage.getItem('accessToken')} />
           }
+        />
+        <Route
+          path="/search"
+          element={<SearchPage token={localStorage.getItem('accessToken')} />}
+        />
+        <Route
+          path="/category/:id"
+          element={<CategoryPage token={localStorage.getItem('accessToken')} />}
         />
         <Route path="/" element={<LoginPage />} />
       </Routes>

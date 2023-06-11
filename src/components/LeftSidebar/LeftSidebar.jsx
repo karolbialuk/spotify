@@ -12,8 +12,6 @@ import { Link } from "react-router-dom";
 const LeftSidebar = ({ token }) => {
   const { data, error, isFetching } = useFetchUserPlaylistsQuery(token);
 
-  console.log({ lewe: data });
-
   let content;
 
   if (isFetching) {
@@ -51,7 +49,9 @@ const LeftSidebar = ({ token }) => {
             <div className="sidebar__main-element-logo">
               <SlMagnifier size={25} />
             </div>
-            <div className="sidebar__main-element-text">Szukaj</div>
+            <Link style={{ textDecoration: "none" }} to={"/search"}>
+              <div className="sidebar__main-element-text">Szukaj</div>
+            </Link>
           </div>
           <div className="sidebar__element">
             <div className="sidebar__main-element-logo">

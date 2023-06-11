@@ -3,60 +3,62 @@ import "./SongsList.scss";
 import { BsClock } from "react-icons/bs";
 import SongListItem from "./SongListItem";
 
-const SongsList = ({ data, isFetching, error, token }) => {
+const SongsList = ({ data, token }) => {
   let number = 0;
   const location = window.location.href.split("/")[3];
 
   let content;
-  if (isFetching) {
-    content = <div>Ładowanie</div>;
-  } else if (error) {
-    content = <div>Wystąpił błąd</div>;
-  } else if (location === "favourite") {
-    content = data.items.map((songs) => {
-      return (
-        <>
-          <SongListItem
-            key={songs.id}
-            token={token}
-            songs={songs}
-            number={(number += 1)}
-          />
-        </>
-      );
-    });
+  if (location === "favourite") {
+    content =
+      data &&
+      data.items.map((songs) => {
+        return (
+          <>
+            <SongListItem
+              key={songs.id}
+              token={token}
+              songs={songs}
+              number={(number += 1)}
+            />
+          </>
+        );
+      });
   } else {
-    content = data.tracks.items.map((songs) => {
-      return (
-        <>
-          <SongListItem
-            key={songs.id}
-            token={token}
-            songs={songs}
-            number={(number += 1)}
-          />
-        </>
-      );
-    });
+    content =
+      data &&
+      data.tracks.items.map((songs) => {
+        return (
+          <>
+            <SongListItem
+              key={songs.id}
+              token={token}
+              songs={songs}
+              number={(number += 1)}
+            />
+          </>
+        );
+      });
   }
 
-  return (
-    <div className="songs-list">
-      <div className="songs-list__container">
-        <div className="songs-list__list-names">
-          <div className="songs-list__list-first">
-            <div>#</div>
-            <div>Tytuł</div>
+  if (data) {
+    return (
+      <div className="songs-list">
+        <div className="songs-list__container">
+          <div className="songs-list__list-names">
+            <div className="songs-list__list-first">
+              <div>#</div>
+              <div>Tytuł</div>
+            </div>
+            <div className="songs-list__list-second">Album</div>
+            <div className="songs-list__list-third">
+              <BsClock size={18} />
+            </div>
           </div>
-          <div className="songs-list__list-second">Album</div>
-          <div className="songs-list__list-third">
-            <BsClock size={18} />
-          </div>
+          {content}
         </div>
-        {content}
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export { SongsList };

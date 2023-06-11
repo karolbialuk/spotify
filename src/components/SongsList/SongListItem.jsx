@@ -7,7 +7,8 @@ import {
   useCheckSavedTracksQuery,
 } from "../../store";
 import { changeId, changePlay } from "../../store";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import axios from "axios";
 
 const SongListItem = ({ songs, number, token }) => {
   const { track } = songs;
@@ -21,7 +22,22 @@ const SongListItem = ({ songs, number, token }) => {
   const [playSong, playSongResults] = usePlayClickedSongMutation();
   const [likeSong, likeSongResults] = useLikeSongMutation();
   const [removeSong, removeSongResults] = useRemoveSongMutation();
-  const { data, isFetching, error } = useCheckSavedTracksQuery({ token, id });
+  // const { data, isFetching, error } = useCheckSavedTracksQuery({ token, id });
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("https://api.spotify.com/v1/me/tracks/contains", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          ids: id,
+        },
+      })
+      .then((response) => setData(response.data))
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleLike = async ({ id, e }) => {
     e.stopPropagation();
@@ -35,6 +51,8 @@ const SongListItem = ({ songs, number, token }) => {
 
     if (el.classList.contains("active")) {
       el.classList.remove("active");
+      const parent = el.parentElement;
+      console.log(parent.parentElement.remove());
     } else if (!el.classList.contains("active")) {
       el.classList.add("active");
     }
@@ -66,47 +84,49 @@ const SongListItem = ({ songs, number, token }) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 
-  return (
-    <div className="songs-list__element" onClick={handlePlaySong}>
-      <div className="songs-list__title">
-        <div className="songs-list__number">{number}</div>
-        <div className="songs-list__title-img">
-          {track.album.images[2] && <img src={track.album.images[2].url} />}
+  if (data) {
+    return (
+      <div className="songs-list__element" onClick={handlePlaySong}>
+        <div className="songs-list__title">
+          <div className="songs-list__number">{number}</div>
+          <div className="songs-list__title-img">
+            {track.album.images[2] && <img src={track.album.images[2].url} />}
+          </div>
+          <div className="songs-list__title-text">
+            <h1>{track.name}</h1>
+            <p>
+              {track.artists.map((item, index) => (
+                <>
+                  {item.name}
+                  {index === track.artists.length - 1 ? "" : ", "}
+                </>
+              ))}
+            </p>
+          </div>
         </div>
-        <div className="songs-list__title-text">
-          <h1>{track.name}</h1>
-          <p>
-            {track.artists.map((item, index) => (
-              <>
-                {item.name}
-                {index === track.artists.length - 1 ? "" : ", "}
-              </>
-            ))}
-          </p>
-        </div>
-      </div>
-      <div className="songs-list__album">{track.album.name}</div>
-      <div className="songs-list__time">
-        <button
-          className={`songs-list__like ${
-            data && data.toString() === "true" ? "active" : ""
-          }`}
-          id={track.id}
-          onClick={(e) => handleLike({ id, e })}
-        >
-          {data && data.toString() === "false" ? (
-            <AiFillHeart color={isLiked ? "green" : "white"} size={20} />
-          ) : (
-            <AiFillHeart color={isLiked ? "white" : "green"} size={20} />
-          )}
-        </button>
+        <div className="songs-list__album">{track.album.name}</div>
+        <div className="songs-list__time">
+          <button
+            className={`songs-list__like ${
+              data && data.toString() === "true" ? "active" : ""
+            }`}
+            id={track.id}
+            onClick={(e) => handleLike({ id, e })}
+          >
+            {data && data.toString() === "false" ? (
+              <AiFillHeart color={isLiked ? "green" : "white"} size={20} />
+            ) : (
+              <AiFillHeart color={isLiked ? "white" : "green"} size={20} />
+            )}
+          </button>
 
-        <div className="songs-list__time-element">
-          {millisToMinutesAndSeconds(track.duration_ms)}
+          <div className="songs-list__time-element">
+            {millisToMinutesAndSeconds(track.duration_ms)}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default SongListItem;

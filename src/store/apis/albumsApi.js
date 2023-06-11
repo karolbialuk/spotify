@@ -94,6 +94,23 @@ const albumsApi = createApi({
         },
       }),
 
+      fetchCategories: builder.query({
+        query: (token) => {
+          return {
+            url: `/browse/categories`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              country: 'PL',
+              locale: 'pl_PL',
+              limit: '50',
+            },
+          }
+        },
+      }),
+
       checkSavedTracks: builder.query({
         query: ({ token, id }) => {
           return {
@@ -104,6 +121,23 @@ const albumsApi = createApi({
             },
             params: {
               ids: id,
+            },
+          }
+        },
+      }),
+
+      fetchSearchItems: builder.query({
+        query: ({ token, search, type }) => {
+          return {
+            url: `/search`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              q: search,
+              type: type,
+              market: 'PL',
             },
           }
         },
@@ -185,5 +219,7 @@ export const {
   useLikeSongMutation,
   useCheckSavedTracksQuery,
   useRemoveSongMutation,
+  useFetchCategoriesQuery,
+  useFetchSearchItemsQuery,
 } = albumsApi
 export { albumsApi }

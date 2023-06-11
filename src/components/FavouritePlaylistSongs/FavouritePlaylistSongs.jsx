@@ -10,13 +10,37 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { changeId, changePlay } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const FavouritePlaylistSongs = ({ token }) => {
   const [offset, setOffset] = useState(0);
-  const { data, isFetching, error } = useFetchLikedSongsQuery({
-    token,
-    offset,
-  });
+  const [data, setData] = useState();
+  // const { data, isFetching, error } = useFetchLikedSongsQuery({
+  //   token,
+  //   offset,
+  // });
+
+  const fetchData = async (newOffset) => {
+    try {
+      const response = await axios.get("https://api.spotify.com/v1/me/tracks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          limit: "50",
+          offset: newOffset,
+        },
+        market: "PL",
+      });
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -27,6 +51,7 @@ const FavouritePlaylistSongs = ({ token }) => {
     const newOffset = offset + 50;
     if (newOffset <= data.total) {
       setOffset(newOffset);
+      fetchData(newOffset);
     }
   };
 
@@ -34,6 +59,7 @@ const FavouritePlaylistSongs = ({ token }) => {
     const newOffset = offset - 50;
     if (newOffset >= 0) {
       setOffset(newOffset);
+      fetchData(newOffset);
     }
   };
 
@@ -94,23 +120,22 @@ const FavouritePlaylistSongs = ({ token }) => {
                 />
               </div>
             )}
-            <div>
-              <AiFillCaretRight
-                onClick={incOff}
-                disabled={data && offset + 50 > data.total}
-                size={35}
-                style={{ color: "#fff", cursor: "pointer" }}
-              />
-            </div>
+            {offset >= 0 && offset < (data && data.total) ? (
+              <div>
+                <AiFillCaretRight
+                  onClick={incOff}
+                  disabled={data && offset + 50 > data.total}
+                  size={35}
+                  style={{ color: "#fff", cursor: "pointer" }}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
-        <SongsList
-          data={data}
-          isFetching={isFetching}
-          error={error}
-          token={token}
-        />
+        <SongsList data={data} token={token} />
       </div>
     </div>
   );

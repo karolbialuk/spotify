@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { albumsApi } from './apis/albumsApi'
 import { uriReducer, changeId, changePlay } from './slices/uriSlice'
 import { songReducer, changeSong } from './slices/songSlice'
+import { searchReducer, changeSearch } from './slices/searchSlice'
 
 export const store = configureStore({
   reducer: {
     uri: uriReducer,
     song: songReducer,
+    search: searchReducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -29,6 +31,8 @@ export {
   useLikeSongMutation,
   useCheckSavedTracksQuery,
   useRemoveSongMutation,
+  useFetchCategoriesQuery,
+  useFetchSearchItemsQuery,
 } from './apis/albumsApi'
 
-export { changeId, changeSong, changePlay }
+export { changeId, changeSong, changePlay, changeSearch }

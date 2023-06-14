@@ -54,6 +54,10 @@ const App = () => {
           element={<PlaylistPage token={localStorage.getItem('accessToken')} />}
         />
         <Route
+          path="/album/:id"
+          element={<PlaylistPage token={localStorage.getItem('accessToken')} />}
+        />
+        <Route
           path="/favourite"
           element={
             <FavouritePage token={localStorage.getItem('accessToken')} />

@@ -2,42 +2,45 @@ import { React, useState, useEffect } from "react";
 import "./SongsList.scss";
 import { BsClock } from "react-icons/bs";
 import SongListItem from "./SongListItem";
+import { useLocation } from "react-router-dom";
 
-const SongsList = ({ data, token }) => {
+const SongsList = ({ data, token, albumInfo }) => {
+  console.log({ wazne: data });
+  const location = useLocation();
   let number = 0;
-  const location = window.location.href.split("/")[3];
-
   let content;
-  if (location === "favourite") {
+  if (location.pathname.split("/")[1] === "favourite") {
     content =
       data &&
-      data.items.map((songs) => {
+      data.items.map((song) => {
         return (
           <>
             <SongListItem
-              key={songs.id}
+              key={song.id}
               token={token}
-              songs={songs}
+              song={song}
               number={(number += 1)}
             />
           </>
         );
       });
-  } else {
-    content =
-      data &&
-      data.tracks.items.map((songs) => {
-        return (
-          <>
-            <SongListItem
-              key={songs.id}
-              token={token}
-              songs={songs}
-              number={(number += 1)}
-            />
-          </>
-        );
-      });
+  } else if (
+    location.pathname.split("/")[1] === "playlist" ||
+    location.pathname.split("/")[1] === "album"
+  ) {
+    content = data.tracks.items.map((song) => {
+      return (
+        <>
+          <SongListItem
+            key={song.id}
+            token={token}
+            song={song}
+            albumInfo={albumInfo}
+            number={(number += 1)}
+          />
+        </>
+      );
+    });
   }
 
   if (data) {

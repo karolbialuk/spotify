@@ -25,7 +25,7 @@ const MainSecondBlock = ({ title, token, query, category, search, type }) => {
     content = data.albums.items.slice(1, 8).map((item) => {
       return (
         <>
-          <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
+          <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
             <SecondBlockItem key={item.id} data={item} type="album" />
           </Link>
         </>

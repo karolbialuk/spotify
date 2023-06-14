@@ -77,6 +77,32 @@ const albumsApi = createApi({
           }
         },
       }),
+      fetchAlbumInfo: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `albums/${id}`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {},
+            market: 'PL',
+          }
+        },
+      }),
+      fetchAlbumSongs: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `albums/${id}/tracks`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {},
+            market: 'PL',
+          }
+        },
+      }),
       fetchLikedSongs: builder.query({
         query: ({ token, offset }) => {
           return {
@@ -143,6 +169,22 @@ const albumsApi = createApi({
         },
       }),
 
+      CheckSavedSongs: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: '/me/tracks/contains',
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+
+            params: {
+              ids: id,
+            },
+          }
+        },
+      }),
+
       playClickedSong: builder.mutation({
         query: ({ uri, token, context }) => {
           return {
@@ -175,6 +217,7 @@ const albumsApi = createApi({
           }
         },
       }),
+
       likeSong: builder.mutation({
         query: ({ token, id }) => {
           return {
@@ -221,5 +264,8 @@ export const {
   useRemoveSongMutation,
   useFetchCategoriesQuery,
   useFetchSearchItemsQuery,
+  useFetchAlbumInfoQuery,
+  useFetchAlbumSongsQuery,
+  useCheckSavedSongsQuery,
 } = albumsApi
 export { albumsApi }

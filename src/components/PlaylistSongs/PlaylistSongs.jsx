@@ -8,6 +8,8 @@ import { SongsList } from "../SongsList/SongsList";
 import {
   useFetchPlaylistInfoQuery,
   useFetchPlaylistSongsQuery,
+  useFetchAlbumInfoQuery,
+  useFetchAlbumSongsQuery,
   usePlayClickedSongMutation,
 } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +18,9 @@ import { useLocation } from "react-router-dom";
 
 const PlaylistSongs = ({ token, devices }) => {
   const [id, setId] = useState("");
+  const [fetch, setFetch] = useState(true);
+  const [fetchInfoData, setFetchInfoData] = useState();
+  const [dataSongs, setDataSongs] = useState();
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -27,19 +32,28 @@ const PlaylistSongs = ({ token, devices }) => {
     setId(playlistId);
   }, [location]);
 
+  const href = location.pathname.split("/")[1];
+
   const { data, isFetching, error } = useFetchPlaylistInfoQuery({
     token,
     id,
   });
 
   const {
-    data2 = data,
-    error2 = error,
-    isFetching2 = isFetching,
-  } = useFetchPlaylistSongsQuery({
-    token,
-    id,
-  });
+    data: data2 = data,
+    isFetching: isFetching2 = isFetching,
+    error: error2 = error,
+  } = useFetchAlbumInfoQuery({ token, id });
+
+  useEffect(() => {
+    if (href === "playlist" && data) {
+      setFetchInfoData(data);
+    } else if (href === "album" && data2) {
+      setFetchInfoData(data2);
+    }
+  }, [data, data2]);
+
+  console.log({ infodata: fetchInfoData });
 
   const player_id = useSelector((state) => {
     return state.uri.id;
@@ -50,8 +64,13 @@ const PlaylistSongs = ({ token, devices }) => {
   });
 
   const handlePlayMusic = () => {
-    const uri = data2 && data2.tracks.items.map((item) => item.track.uri);
-    console.log("tojestto", uri);
+    const uri =
+      (href === "playlist" &&
+        data &&
+        data.tracks.items.map((item) => item.track.uri)) ||
+      (href === "album" &&
+        data2 &&
+        data2.tracks.items.map((item) => item.track.uri));
 
     if (!player_id && !play_status) {
       dispatch(changeId(uri));
@@ -61,23 +80,26 @@ const PlaylistSongs = ({ token, devices }) => {
     }
   };
 
-  if (isFetching) {
+  if (
+    (isFetching && href === "playlist") ||
+    (isFetching2 && href === "album")
+  ) {
     return <div>Ładowanie</div>;
-  } else if (error) {
-    return <div>błąd</div>;
-  } else {
+  } else if (fetchInfoData) {
     return (
       <div className="playlist-songs">
         <div className="playlist-songs__container">
           <div className="playlist-songs__header">
             <div className="playlist-songs__img">
-              {data.images[0] && <img src={data.images[0].url} />}
+              {fetchInfoData.images[0] && (
+                <img src={fetchInfoData.images[0].url} />
+              )}
             </div>
             <div className="playlist-songs__text">
               <h3>Playlista</h3>
-              <h1>{data.name}</h1>
+              <h1>{fetchInfoData.name}</h1>
               <div className="playlist-songs__text-bottom">
-                {data.description}
+                {fetchInfoData.description}
               </div>
             </div>
           </div>
@@ -98,9 +120,10 @@ const PlaylistSongs = ({ token, devices }) => {
             </div>
           </div>
           <SongsList
-            data={data2}
-            isFetching={isFetching2}
-            error={error2}
+            data={href === "playlist" ? data : data2}
+            isFetching={href === "playlist" ? isFetching : isFetching2}
+            error={href === "playlist" ? error : error2}
+            albumInfo={fetchInfoData}
             token={token}
           />
         </div>

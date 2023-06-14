@@ -33,6 +33,9 @@ export {
   useRemoveSongMutation,
   useFetchCategoriesQuery,
   useFetchSearchItemsQuery,
+  useFetchAlbumInfoQuery,
+  useFetchAlbumSongsQuery,
+  useCheckSavedSongsQuery,
 } from './apis/albumsApi'
 
 export { changeId, changeSong, changePlay, changeSearch }

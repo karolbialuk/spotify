@@ -4,55 +4,73 @@ import {
   usePlayClickedSongMutation,
   useLikeSongMutation,
   useRemoveSongMutation,
-  useCheckSavedTracksQuery,
+  useCheckSavedSongsQuery,
 } from "../../store";
 import { changeId, changePlay } from "../../store";
 import { AiFillHeart } from "react-icons/ai";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
-const SongListItem = ({ songs, number, token }) => {
-  const { track } = songs;
-
+const SongListItem = ({ song, number, token, albumInfo }) => {
   const [isLiked, setisLiked] = useState(false);
-
+  const location = useLocation();
   const dispatch = useDispatch();
 
-  const id = track.id;
+  const href = location.pathname.split("/")[1];
+
+  // song.track.id to playlist song.id to album
+
+  let id =
+    href === "playlist" || href === "favourite" ? song.track.id : song.id;
 
   const [playSong, playSongResults] = usePlayClickedSongMutation();
   const [likeSong, likeSongResults] = useLikeSongMutation();
   const [removeSong, removeSongResults] = useRemoveSongMutation();
-  // const { data, isFetching, error } = useCheckSavedTracksQuery({ token, id });
-  const [data, setData] = useState(null);
+
+  // const { data, isFetching, error } = useCheckSavedSongsQuery({ token, id });
+  const [idToChange, setidToChange] = useState();
+  const [checkedData, setCheckedData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://api.spotify.com/v1/me/tracks/contains", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          ids: id,
-        },
-      })
-      .then((response) => setData(response.data))
-      .catch((error) => console.log(error));
+    const fetchData = async ({ id, token }) => {
+      try {
+        const response = await axios.get(
+          "https://api.spotify.com/v1/me/tracks/contains",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: id,
+            },
+          }
+        );
+        setCheckedData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData({ id, token });
   }, []);
 
-  const handleLike = async ({ id, e }) => {
+  console.log(checkedData);
+
+  const handleLike = async (e) => {
     e.stopPropagation();
+
     const el = document.getElementById(id);
 
-    if (data.toString() === "false") {
+    if (checkedData.toString() === "false") {
       await likeSong({ token, id });
-    } else if (data.toString() === "true") {
+    } else if (checkedData.toString() === "true") {
       await removeSong({ token, id });
     }
 
     if (el.classList.contains("active")) {
       el.classList.remove("active");
       const parent = el.parentElement;
-      console.log(parent.parentElement.remove());
+      href === "favourite" && parent.parentElement.remove();
     } else if (!el.classList.contains("active")) {
       el.classList.add("active");
     }
@@ -69,9 +87,9 @@ const SongListItem = ({ songs, number, token }) => {
   });
 
   const handlePlaySong = () => {
-    const uri = [track.uri];
+    const uri = [song.track.uri];
     if (!player_id && !play_status) {
-      dispatch(changeId(track.uri));
+      dispatch(changeId(song.track.uri));
       dispatch(changePlay(true));
     } else if (play_status) {
       playSong({ uri, token });
@@ -84,36 +102,61 @@ const SongListItem = ({ songs, number, token }) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 
-  if (data) {
+  // dla playlist i favourites
+  // song.track.album.images[2] && <img src={song.track.album.images[2].url}
+
+  // dla album
+  // albumInfo.images[2] && <img src={albumInfo.images[2].url}
+
+  if (song) {
     return (
       <div className="songs-list__element" onClick={handlePlaySong}>
         <div className="songs-list__title">
           <div className="songs-list__number">{number}</div>
           <div className="songs-list__title-img">
-            {track.album.images[2] && <img src={track.album.images[2].url} />}
+            {href === "playlist" || href === "favourite"
+              ? song.track.album.images[2] && (
+                  <img src={song.track.album.images[2].url} />
+                )
+              : albumInfo.images[2] && <img src={albumInfo.images[2].url} />}
           </div>
           <div className="songs-list__title-text">
-            <h1>{track.name}</h1>
+            <h1>
+              {href === "playlist" || href === "favourite"
+                ? song.track.name
+                : song.name}
+            </h1>
             <p>
-              {track.artists.map((item, index) => (
-                <>
-                  {item.name}
-                  {index === track.artists.length - 1 ? "" : ", "}
-                </>
-              ))}
+              {href === "playlist" || href === "favourite"
+                ? song.track.artists.slice(0, 5).map((item, index) => (
+                    <>
+                      {item.name}
+                      {index === song.track.artists.length - 1 ? "" : ", "}
+                    </>
+                  ))
+                : song.artists.slice(0, 5).map((item, index) => (
+                    <>
+                      {item.name}
+                      {index === song.artists.length - 1 ? "" : ", "}
+                    </>
+                  ))}
             </p>
           </div>
         </div>
-        <div className="songs-list__album">{track.album.name}</div>
+        <div className="songs-list__album">
+          {href === "playlist" || href === "favourite"
+            ? song.track.album.name
+            : ""}
+        </div>
         <div className="songs-list__time">
           <button
             className={`songs-list__like ${
-              data && data.toString() === "true" ? "active" : ""
+              checkedData && checkedData.toString() === "true" ? "active" : ""
             }`}
-            id={track.id}
-            onClick={(e) => handleLike({ id, e })}
+            id={id}
+            onClick={(e) => handleLike(e)}
           >
-            {data && data.toString() === "false" ? (
+            {checkedData && checkedData.toString() === "false" ? (
               <AiFillHeart color={isLiked ? "green" : "white"} size={20} />
             ) : (
               <AiFillHeart color={isLiked ? "white" : "green"} size={20} />
@@ -121,7 +164,9 @@ const SongListItem = ({ songs, number, token }) => {
           </button>
 
           <div className="songs-list__time-element">
-            {millisToMinutesAndSeconds(track.duration_ms)}
+            {href === "playlist" || href === "favourite"
+              ? millisToMinutesAndSeconds(song.track.duration_ms)
+              : millisToMinutesAndSeconds(song.duration_ms)}
           </div>
         </div>
       </div>

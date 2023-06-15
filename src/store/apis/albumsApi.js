@@ -152,6 +152,22 @@ const albumsApi = createApi({
         },
       }),
 
+      fetchAuthorTopTracks: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `/artists/${id}/top-tracks`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              id: id,
+              market: 'PL',
+            },
+          }
+        },
+      }),
+
       fetchSearchItems: builder.query({
         query: ({ token, search, type }) => {
           return {
@@ -180,6 +196,46 @@ const albumsApi = createApi({
 
             params: {
               ids: id,
+            },
+          }
+        },
+      }),
+
+      CheckAuthorAlbums: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `/artists/${id}/albums`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+
+            params: {
+              market: 'PL',
+            },
+          }
+        },
+      }),
+
+      fetchAuthor: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `artists/${id}`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        },
+      }),
+
+      fetchRelatedAuthors: builder.query({
+        query: ({ token, id }) => {
+          return {
+            url: `artists/${id}/related-artists`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
           }
         },
@@ -267,5 +323,9 @@ export const {
   useFetchAlbumInfoQuery,
   useFetchAlbumSongsQuery,
   useCheckSavedSongsQuery,
+  useFetchAuthorTopTracksQuery,
+  useFetchAuthorQuery,
+  useCheckAuthorAlbumsQuery,
+  useFetchRelatedAuthorsQuery,
 } = albumsApi
 export { albumsApi }

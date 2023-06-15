@@ -30,8 +30,6 @@ const MainSearchBlock = ({ token }) => {
     error: error2 = error,
   } = useFetchSearchItemsQuery({ token, search, type: "album" });
 
-  console.log({ ess: data2 });
-
   const {
     data: data3 = data,
     isFetching: isFetching3 = isFetching,
@@ -64,15 +62,6 @@ const MainSearchBlock = ({ token }) => {
             </div>
           </div>
         );
-      });
-
-    let authors;
-    let essa =
-      data3.tracks &&
-      data3.tracks.items.map((item) => {
-        item.artists.slice(0, 4).map((artist) => {
-          console.log(artist.name);
-        });
       });
 
     content2 = (

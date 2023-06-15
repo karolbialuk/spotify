@@ -36,6 +36,10 @@ export {
   useFetchAlbumInfoQuery,
   useFetchAlbumSongsQuery,
   useCheckSavedSongsQuery,
+  useFetchAuthorTopTracksQuery,
+  useFetchAuthorQuery,
+  useCheckAuthorAlbumsQuery,
+  useFetchRelatedAuthorsQuery,
 } from './apis/albumsApi'
 
 export { changeId, changeSong, changePlay, changeSearch }

@@ -7,8 +7,6 @@ import { useActivateDeviceMutation } from "../../store";
 import axios from "axios";
 
 const PlaylistPage = ({ token }) => {
-  const [devices, setDevices] = useState([]);
-
   if (localStorage.getItem("accessToken")) {
     return (
       <>
@@ -16,7 +14,7 @@ const PlaylistPage = ({ token }) => {
           <LeftSidebar token={token} />
           <div className="root__main-container">
             <Navbar />
-            <PlaylistSongs token={token} devices={devices} />
+            <PlaylistSongs token={token} />
           </div>
         </div>
         <Player token={token} />

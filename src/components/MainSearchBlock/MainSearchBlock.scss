@@ -196,6 +196,10 @@
       
     }
 
+    a{
+        text-decoration: none;
+    }
+
     & &__element{
         background: #201c1c;
         // max-width: 200px;
@@ -206,6 +210,8 @@
         // align-items: center;
         justify-content: space-between;
         flex-direction: column;
+        
+        
 
     }
 

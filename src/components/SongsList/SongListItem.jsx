@@ -7,7 +7,7 @@ import {
   useCheckSavedSongsQuery,
 } from "../../store";
 import { changeId, changePlay } from "../../store";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineConsoleSql } from "react-icons/ai";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
@@ -87,9 +87,23 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
   });
 
   const handlePlaySong = () => {
-    const uri = [song.track.uri];
+    const uri = [
+      href === "favourite" || href === "playlist"
+        ? song.track.uri
+        : href === "author" || href === "album"
+        ? song.uri
+        : "",
+    ];
     if (!player_id && !play_status) {
-      dispatch(changeId(song.track.uri));
+      dispatch(
+        changeId(
+          href === "favourite" || href === "playlist"
+            ? song.track.uri
+            : href === "author" || href === "album"
+            ? song.uri
+            : ""
+        )
+      );
       dispatch(changePlay(true));
     } else if (play_status) {
       playSong({ uri, token });
@@ -102,12 +116,6 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 
-  // dla playlist i favourites
-  // song.track.album.images[2] && <img src={song.track.album.images[2].url}
-
-  // dla album
-  // albumInfo.images[2] && <img src={albumInfo.images[2].url}
-
   if (song) {
     return (
       <div className="songs-list__element" onClick={handlePlaySong}>
@@ -118,6 +126,8 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
               ? song.track.album.images[2] && (
                   <img src={song.track.album.images[2].url} />
                 )
+              : href === "author"
+              ? song.album.images[2] && <img src={song.album.images[2].url} />
               : albumInfo.images[2] && <img src={albumInfo.images[2].url} />}
           </div>
           <div className="songs-list__title-text">

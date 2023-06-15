@@ -65,12 +65,11 @@ const PlaylistSongs = ({ token, devices }) => {
 
   const handlePlayMusic = () => {
     const uri =
-      (href === "playlist" &&
-        data &&
-        data.tracks.items.map((item) => item.track.uri)) ||
-      (href === "album" &&
-        data2 &&
-        data2.tracks.items.map((item) => item.track.uri));
+      href === "playlist"
+        ? data.tracks.items.map((item) => item.track.uri)
+        : href === "album"
+        ? data2.tracks.items.map((item) => item.uri)
+        : "";
 
     if (!player_id && !play_status) {
       dispatch(changeId(uri));

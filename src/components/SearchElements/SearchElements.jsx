@@ -1,6 +1,6 @@
 import React from "react";
 import "./SearchElements.scss";
-import { MainSearchBlock, Main } from "../MainSearchBlock/MainSearchBlock";
+import { MainSearchBlock } from "../MainSearchBlock/MainSearchBlock";
 
 const SearchElements = ({ token }) => {
   return (

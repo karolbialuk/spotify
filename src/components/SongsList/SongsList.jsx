@@ -5,7 +5,6 @@ import SongListItem from "./SongListItem";
 import { useLocation } from "react-router-dom";
 
 const SongsList = ({ data, token, albumInfo }) => {
-  console.log({ wazne: data });
   const location = useLocation();
   let number = 0;
   let content;
@@ -41,6 +40,22 @@ const SongsList = ({ data, token, albumInfo }) => {
         </>
       );
     });
+  } else if (location.pathname.split("/")[1] === "author") {
+    content =
+      data &&
+      data.tracks.map((song) => {
+        return (
+          <>
+            <SongListItem
+              key={song.id}
+              token={token}
+              song={song}
+              albumInfo={albumInfo}
+              number={(number += 1)}
+            />
+          </>
+        );
+      });
   }
 
   if (data) {

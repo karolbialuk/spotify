@@ -20,7 +20,10 @@ const SecondBlockItem = ({ data, type }) => {
     description = desc.join(" ");
   } else if (location.pathname === "/search" && type === "playlist") {
     description = data.owner && "Autor: " + data.owner.display_name;
-  } else if (location.pathname === "/search" && type === "album") {
+  } else if (
+    (location.pathname === "/search" && type === "album") ||
+    (location.pathname.split("/")[1] === "author" && type === "album")
+  ) {
     let author = data.artists.slice(0, 4).map((artist) => {
       return artist.name;
     });

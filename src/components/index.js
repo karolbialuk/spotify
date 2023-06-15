@@ -12,4 +12,5 @@ export { FavouritePlaylistSongs } from './FavouritePlaylistSongs/FavouritePlayli
 export { SearchElements } from './SearchElements/SearchElements'
 export { MainSearchBlock } from './MainSearchBlock/MainSearchBlock'
 export { CategoryElements } from './CategoryElements/CategoryElements'
-export {SearchBlockItem2} from './MainSearchBlock/SearchBlockItem2'
+export { SearchBlockItem2 } from './MainSearchBlock/SearchBlockItem2'
+export { AuthorElements } from './AuthorElements/AuthorElements'

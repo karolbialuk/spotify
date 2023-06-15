@@ -6,6 +6,7 @@ import {
   FavouritePage,
   SearchPage,
   CategoryPage,
+  AuthorPage,
 } from './pages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LeftSidebar, Navbar, Player } from './components'
@@ -70,6 +71,10 @@ const App = () => {
         <Route
           path="/category/:id"
           element={<CategoryPage token={localStorage.getItem('accessToken')} />}
+        />
+        <Route
+          path="/author/:id"
+          element={<AuthorPage token={localStorage.getItem('accessToken')} />}
         />
         <Route path="/" element={<LoginPage />} />
       </Routes>

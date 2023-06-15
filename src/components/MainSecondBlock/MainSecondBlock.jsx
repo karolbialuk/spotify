@@ -4,17 +4,25 @@ import SecondBlockItem from "./SecondBlockItem";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-const MainSecondBlock = ({ title, token, query, category, search, type }) => {
+const MainSecondBlock = ({
+  title,
+  token,
+  query,
+  category,
+  search,
+  type,
+  id,
+}) => {
   const location = useLocation();
   let data, isFetching, error;
 
   if (location.pathname === "/search") {
     ({ data, isFetching, error } = query({ token, search, type }));
+  } else if (location.pathname.split("/")[1] === "author") {
+    ({ data, isFetching, error } = query({ token, id }));
   } else {
     ({ data, isFetching, error } = query({ token, category }));
   }
-
-  console.log({ ezezez: data });
 
   let content;
   if (isFetching) {
@@ -57,6 +65,16 @@ const MainSecondBlock = ({ title, token, query, category, search, type }) => {
         <>
           <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
             <SecondBlockItem key={item.id} data={item} type="episode" />
+          </Link>
+        </>
+      );
+    });
+  } else if (location.pathname.split("/")[1] === "author") {
+    content = data.items.slice(0, 7).map((item) => {
+      return (
+        <>
+          <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
+            <SecondBlockItem key={item.id} data={item} type="album" />
           </Link>
         </>
       );

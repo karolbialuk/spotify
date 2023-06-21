@@ -48,6 +48,8 @@ const PlaylistSongs = ({ token, devices }) => {
     id,
   });
 
+  console.log({ tojestdata: data });
+
   console.log({ playlistinfo: data });
 
   const {
@@ -121,38 +123,26 @@ const PlaylistSongs = ({ token, devices }) => {
   const handleSavePlaylistOrAlbum = async () => {
     const el = document.getElementById("likebtn");
     if (href === "playlist" && isActive?.toString() === "false") {
-      await savePlaylist({ token, playlistOrAlbumId }).then(() => {
-        if (savePlaylistResults.status === "fulfilled") {
-          playlistAlbumRefetch();
-        }
-        el.classList.add("active");
-        setIsActive("true");
-      });
+      await savePlaylist({ token, playlistOrAlbumId });
+
+      el.classList.add("active");
+      setIsActive("true");
     } else if (href === "playlist" && isActive?.toString() === "true") {
-      await removePlaylist({ token, playlistOrAlbumId }).then(() => {
-        if (removePlaylistResults.status === "fulfilled") {
-          playlistAlbumRefetch();
-        }
-        el.classList.remove("active");
-        setIsActive("false");
-      });
+      await removePlaylist({ token, playlistOrAlbumId });
+
+      el.classList.remove("active");
+      setIsActive("false");
     } else if (href === "album" && isActive?.toString() === "false") {
-      await saveAlbum({ token, playlistOrAlbumId }).then(() => {
-        if (saveAlbumResults.status === "fulfilled") {
-          playlistAlbumRefetch();
-        }
-        console.log(saveAlbumResults);
-        el.classList.add("active");
-        setIsActive("true");
-      });
+      await saveAlbum({ token, playlistOrAlbumId });
+
+      console.log(saveAlbumResults);
+      el.classList.add("active");
+      setIsActive("true");
     } else if (href === "album" && isActive?.toString() === "true") {
-      await removeAlbum({ token, playlistOrAlbumId }).then(() => {
-        if (removeAlbumResults.status === "fulfilled") {
-          playlistAlbumRefetch();
-        }
-        el.classList.remove("active");
-        setIsActive("false");
-      });
+      await removeAlbum({ token, playlistOrAlbumId });
+
+      el.classList.remove("active");
+      setIsActive("false");
     }
     playlistAlbumRefetch();
   };
@@ -177,6 +167,10 @@ const PlaylistSongs = ({ token, devices }) => {
                 : href === "album"
                 ? data2?.images[0] && <img src={data2?.images[0].url} />
                 : ""}
+
+              {data.images.length === 0 && href === "playlist" && (
+                <img src={data3?.images[0].url} />
+              )}
             </div>
             <div className="playlist-songs__text">
               <h3>Playlista</h3>

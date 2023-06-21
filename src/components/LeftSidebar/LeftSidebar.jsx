@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useRef } from "react";
 import "./LeftSidebar.scss";
 import { sidebarLogo } from "../../assets/images/index";
 import { AiOutlineHome, AiFillPlusSquare } from "react-icons/ai";
@@ -10,13 +10,14 @@ import {
   useFetchUserPlaylistsQuery,
   useFetchUserAlbumsQuery,
   changeRefresh,
+  useGetCurrentUserQuery,
+  useCreatePlaylistMutation,
+  useAddImgToPlaylistMutation,
 } from "../../store";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
 let playlistAlbumRefetch;
 const LeftSidebar = ({ token }) => {
-  const dispatch = useDispatch();
   const { data, error, isFetching, refetch } =
     useFetchUserPlaylistsQuery(token);
 
@@ -27,15 +28,36 @@ const LeftSidebar = ({ token }) => {
     refetch: refetch2 = refetch,
   } = useFetchUserAlbumsQuery(token);
 
+  const { data: user = data } = useGetCurrentUserQuery(token);
+  const [createPlaylist, createPlaylistResults] = useCreatePlaylistMutation();
+
   playlistAlbumRefetch = () => {
     refetch();
     refetch2();
   };
 
-  // dispatch(changeRefresh(refetch));
-
   let content;
   let content2;
+
+  const handlePanel = () => {
+    const el = document.getElementById("playlist-panel");
+    el.classList.toggle("active");
+    const el2 = document.getElementById("first-main-logo");
+    el2.classList.toggle("active");
+  };
+
+  const inputRef = useRef(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const playlistName = inputRef.current.value;
+    const userId = user.id;
+    await createPlaylist({ token, userId, playlistName });
+
+    inputRef.current.value = "";
+    handlePanel();
+    playlistAlbumRefetch();
+  };
 
   if (isFetching && isFetching2) {
     content = <div>Ładowanie</div>;
@@ -96,10 +118,35 @@ const LeftSidebar = ({ token }) => {
 
         <div className="sidebar__elements-container">
           <div className="sidebar__element">
-            <div className="sidebar__main-element-logo">
-              <AiFillPlusSquare size={25} />
+            <div
+              id="first-main-logo"
+              className="sidebar__first-main-element-logo active"
+            >
+              <AiFillPlusSquare onClick={handlePanel} size={25} />
             </div>
-            <div className="sidebar__main-element-text">Utwórz playlistę</div>
+            <div className="sidebar__playlist-create-container">
+              <div onClick={handlePanel} className="sidebar__main-element-text">
+                Utwórz playlistę
+              </div>
+              <div
+                id="playlist-panel"
+                className="sidebar__playlist-create-panel active"
+              >
+                <h3>Wprowadź nazwę Playlisty</h3>
+
+                <form onSubmit={handleSubmit}>
+                  <div className="sidebar__search">
+                    <input
+                      className="sidebar__input"
+                      type="text"
+                      placeholder="Nazwa"
+                      ref={inputRef}
+                    />
+                  </div>
+                  <button type="submit">Utwórz</button>
+                </form>
+              </div>
+            </div>
           </div>
           <div className="sidebar__element">
             <div className="sidebar__main-element-logo">

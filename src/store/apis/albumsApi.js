@@ -413,6 +413,36 @@ const albumsApi = createApi({
           }
         },
       }),
+
+      createPlaylist: builder.mutation({
+        query: ({ token, userId, playlistName }) => {
+          return {
+            url: `/users/${userId}/playlists`,
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: {
+              name: playlistName,
+            },
+          }
+        },
+      }),
+
+      addImgToPlaylist: builder.mutation({
+        query: ({ token, playlistId, imgUrl }) => {
+          return {
+            url: `v1/playlists/${playlistId}/images`,
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: {
+              imgUrl,
+            },
+          }
+        },
+      }),
     }
   },
 })
@@ -446,5 +476,7 @@ export const {
   useRemovePlaylistMutation,
   useRemoveAlbumMutation,
   useCheckUserFollowAlbumQuery,
+  useCreatePlaylistMutation,
+  useAddImgToPlaylistMutation,
 } = albumsApi
 export { albumsApi }

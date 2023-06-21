@@ -50,6 +50,8 @@ export {
   useRemovePlaylistMutation,
   useRemoveAlbumMutation,
   useCheckUserFollowAlbumQuery,
+  useCreatePlaylistMutation,
+  useAddImgToPlaylistMutation,
 } from './apis/albumsApi'
 
 export { changeId, changeSong, changePlay, changeSearch, changeCategory }

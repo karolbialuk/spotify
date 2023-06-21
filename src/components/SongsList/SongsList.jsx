@@ -9,25 +9,23 @@ const SongsList = ({ data, token, albumInfo }) => {
   let number = 0;
   let content;
   if (location.pathname.split("/")[1] === "favourite") {
-    content =
-      data &&
-      data.items.map((song) => {
-        return (
-          <>
-            <SongListItem
-              key={song.id}
-              token={token}
-              song={song}
-              number={(number += 1)}
-            />
-          </>
-        );
-      });
+    content = data?.items?.map((song) => {
+      return (
+        <>
+          <SongListItem
+            key={song.id}
+            token={token}
+            song={song}
+            number={(number += 1)}
+          />
+        </>
+      );
+    });
   } else if (
     location.pathname.split("/")[1] === "playlist" ||
     location.pathname.split("/")[1] === "album"
   ) {
-    content = data.tracks.items.map((song) => {
+    content = data?.tracks?.items.map((song) => {
       return (
         <>
           <SongListItem

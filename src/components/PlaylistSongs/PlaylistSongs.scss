@@ -72,7 +72,19 @@
 
     }
 
+    & &__btn-second.active{
+        color: #20d464;
+    }
+
     & &__btn-third{
 
+    }
+
+    & &__buttons{
+        button{
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
     }
 }

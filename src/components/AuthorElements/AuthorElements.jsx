@@ -78,7 +78,7 @@ const AuthorElements = ({ token }) => {
             <h1>{data2 && data2.name}</h1>
             <div className="author-elements__text-bottom">
               {location.pathname.split("/")[1] === "author"
-                ? data2 && "Obserwujący - " + data2.followers.total
+                ? data2 && "Obserwujący - " + data2?.followers?.total
                 : ""}
             </div>
           </div>

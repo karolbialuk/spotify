@@ -31,63 +31,104 @@ const MainSecondBlock = ({
     content = <div>Błąd podczas ładowania</div>;
   } else if (location.pathname === "/search" && type === "album") {
     content = data.albums.items.slice(1, 8).map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} type="album" />
-          </Link>
-        </>
-      );
+      if (item) {
+        return (
+          <>
+            <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
+              <SecondBlockItem key={item.id} data={item} type="album" />
+            </Link>
+          </>
+        );
+      }
     });
   } else if (location.pathname === "/search" && type === "playlist") {
     content = data.playlists.items.slice(1, 8).map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} type="playlist" />
-          </Link>
-        </>
-      );
+      if (item) {
+        return (
+          <>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={"/playlist/" + item.id}
+            >
+              <SecondBlockItem key={item.id} data={item} type="playlist" />
+            </Link>
+          </>
+        );
+      }
     });
   } else if (location.pathname === "/search" && type === "show") {
     content = data.shows.items.slice(1, 8).map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} type="show" />
-          </Link>
-        </>
-      );
+      if (item) {
+        return (
+          <>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={"/playlist/" + item.id}
+            >
+              <SecondBlockItem key={item.id} data={item} type="show" />
+            </Link>
+          </>
+        );
+      }
     });
   } else if (location.pathname === "/search" && type === "episode") {
     content = data.episodes.items.slice(1, 8).map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} type="episode" />
-          </Link>
-        </>
-      );
+      if (item) {
+        return (
+          <>
+            <Link
+              style={{ textDecoration: "none" }}
+              to={"/playlist/" + item.id}
+            >
+              <SecondBlockItem key={item.id} data={item} type="episode" />
+            </Link>
+          </>
+        );
+      }
     });
   } else if (location.pathname.split("/")[1] === "author") {
     content = data.items.slice(0, 7).map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} type="album" />
-          </Link>
-        </>
-      );
+      if (item) {
+        return (
+          <>
+            <Link style={{ textDecoration: "none" }} to={"/album/" + item.id}>
+              <SecondBlockItem key={item.id} data={item} type="album" />
+            </Link>
+          </>
+        );
+      }
+    });
+  } else if (location.pathname.split("/")[1] === "category") {
+    content = data?.playlists?.items?.map((item) => {
+      if (item) {
+        return (
+          <>
+            <Link
+              key={item?.id}
+              style={{ textDecoration: "none" }}
+              to={"/playlist/" + item?.id}
+            >
+              <SecondBlockItem data={item} />
+            </Link>
+          </>
+        );
+      }
     });
   } else {
-    content = data.playlists.items.map((item) => {
-      return (
-        <>
-          <Link style={{ textDecoration: "none" }} to={"/playlist/" + item.id}>
-            <SecondBlockItem key={item.id} data={item} />
-          </Link>
-        </>
-      );
+    content = data?.playlists?.items?.slice(0, 7).map((item) => {
+      if (item) {
+        return (
+          <>
+            <Link
+              key={item?.id}
+              style={{ textDecoration: "none" }}
+              to={"/playlist/" + item?.id}
+            >
+              <SecondBlockItem data={item} />
+            </Link>
+          </>
+        );
+      }
     });
   }
 

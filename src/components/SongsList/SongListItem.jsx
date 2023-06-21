@@ -21,7 +21,7 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
   // song.track.id to playlist song.id to album
 
   let id =
-    href === "playlist" || href === "favourite" ? song.track.id : song.id;
+    href === "playlist" || href === "favourite" ? song?.track?.id : song?.id;
 
   const [playSong, playSongResults] = usePlayClickedSongMutation();
   const [likeSong, likeSongResults] = useLikeSongMutation();
@@ -53,8 +53,6 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
 
     fetchData({ id, token });
   }, []);
-
-  console.log(checkedData);
 
   const handleLike = async (e) => {
     e.stopPropagation();
@@ -123,8 +121,8 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
           <div className="songs-list__number">{number}</div>
           <div className="songs-list__title-img">
             {href === "playlist" || href === "favourite"
-              ? song.track.album.images[2] && (
-                  <img src={song.track.album.images[2].url} />
+              ? song?.track?.album?.images[2] && (
+                  <img src={song?.track?.album?.images[2]?.url} />
                 )
               : href === "author"
               ? song.album.images[2] && <img src={song.album.images[2].url} />
@@ -133,21 +131,21 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
           <div className="songs-list__title-text">
             <h1>
               {href === "playlist" || href === "favourite"
-                ? song.track.name
-                : song.name}
+                ? song?.track?.name
+                : song?.name}
             </h1>
             <p>
               {href === "playlist" || href === "favourite"
-                ? song.track.artists.slice(0, 5).map((item, index) => (
+                ? song?.track?.artists?.slice(0, 5).map((item, index) => (
                     <>
                       {item.name}
-                      {index === song.track.artists.length - 1 ? "" : ", "}
+                      {index === song?.track?.artists?.length - 1 ? "" : ", "}
                     </>
                   ))
-                : song.artists.slice(0, 5).map((item, index) => (
+                : song?.artists?.slice(0, 5).map((item, index) => (
                     <>
                       {item.name}
-                      {index === song.artists.length - 1 ? "" : ", "}
+                      {index === song?.artists?.length - 1 ? "" : ", "}
                     </>
                   ))}
             </p>
@@ -155,7 +153,7 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
         </div>
         <div className="songs-list__album">
           {href === "playlist" || href === "favourite"
-            ? song.track.album.name
+            ? song?.track?.album?.name
             : ""}
         </div>
         <div className="songs-list__time">
@@ -175,8 +173,8 @@ const SongListItem = ({ song, number, token, albumInfo }) => {
 
           <div className="songs-list__time-element">
             {href === "playlist" || href === "favourite"
-              ? millisToMinutesAndSeconds(song.track.duration_ms)
-              : millisToMinutesAndSeconds(song.duration_ms)}
+              ? millisToMinutesAndSeconds(song?.track?.duration_ms)
+              : millisToMinutesAndSeconds(song?.duration_ms)}
           </div>
         </div>
       </div>

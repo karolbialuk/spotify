@@ -5,19 +5,20 @@ const SecondBlockItem = ({ data, type }) => {
   const location = useLocation();
   let description;
 
-  console.log(location.pathname);
-
-  if (location.pathname === "/home") {
-    let desc = data.description.split(" ");
+  if (
+    location.pathname === "/home" ||
+    location.pathname.split("/")[1] === "category"
+  ) {
+    let desc = data?.description.split(" ");
 
     let index = desc && desc.indexOf("<a");
-    desc.splice(index, index + 1);
-    if (desc.length > 12) {
+    desc?.splice(index, index + 1);
+    if (desc?.length > 12) {
       desc.splice(12, desc.length);
       desc.push("...");
     }
-    console.log(desc);
-    description = desc.join(" ");
+
+    description = desc?.join(" ");
   } else if (location.pathname === "/search" && type === "playlist") {
     description = data.owner && "Autor: " + data.owner.display_name;
   } else if (
@@ -66,10 +67,10 @@ const SecondBlockItem = ({ data, type }) => {
   return (
     <div className="main-second-block__element">
       <div className="main-second-block__element-img">
-        <img src={data.images[0].url} />
+        <img src={data?.images[0]?.url} />
       </div>
       <div className="main-second-block__element-content">
-        <h2>{data.name}</h2>
+        <h2>{data?.name}</h2>
         <p>{description}</p>
       </div>
     </div>

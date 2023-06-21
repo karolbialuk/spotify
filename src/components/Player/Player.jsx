@@ -12,8 +12,6 @@ const Player = ({ token }) => {
     return state.uri.play;
   });
 
-  console.log({ playerid: id });
-
   return (
     <div className="player">
       <SpotifyPlayer

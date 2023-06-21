@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import "./LeftSidebar.scss";
 import { sidebarLogo } from "../../assets/images/index";
 import { AiOutlineHome, AiFillPlusSquare } from "react-icons/ai";
@@ -6,24 +6,57 @@ import { SlMagnifier } from "react-icons/sl";
 import { BiLibrary } from "react-icons/bi";
 import { BsFillBagHeartFill } from "react-icons/bs";
 import LeftSidePlaylists from "./LeftSidePlaylists";
-import { useFetchUserPlaylistsQuery } from "../../store";
+import {
+  useFetchUserPlaylistsQuery,
+  useFetchUserAlbumsQuery,
+  changeRefresh,
+} from "../../store";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
+let playlistAlbumRefetch;
 const LeftSidebar = ({ token }) => {
-  const { data, error, isFetching } = useFetchUserPlaylistsQuery(token);
+  const dispatch = useDispatch();
+  const { data, error, isFetching, refetch } =
+    useFetchUserPlaylistsQuery(token);
+
+  const {
+    data: data2 = data,
+    isFetching: isFetching2 = isFetching,
+    error: error2 = error,
+    refetch: refetch2 = refetch,
+  } = useFetchUserAlbumsQuery(token);
+
+  playlistAlbumRefetch = () => {
+    refetch();
+    refetch2();
+  };
+
+  // dispatch(changeRefresh(refetch));
 
   let content;
+  let content2;
 
-  if (isFetching) {
+  if (isFetching && isFetching2) {
     content = <div>Ładowanie</div>;
-  } else if (error) {
-    content = <div>Błąd podczas ładowania</div>;
   } else {
-    content = data.items.map((album) => {
+    content = data?.items?.map((album) => {
       return (
         <>
           <Link style={{ textDecoration: "none" }} to={"/playlist/" + album.id}>
             <LeftSidePlaylists key={album.id} album={album} />
+          </Link>
+        </>
+      );
+    });
+    content2 = data2?.items?.map((album) => {
+      return (
+        <>
+          <Link
+            style={{ textDecoration: "none" }}
+            to={"/album/" + album?.album?.id}
+          >
+            <LeftSidePlaylists key={album?.album?.id} album={album.album} />
           </Link>
         </>
       );
@@ -78,10 +111,15 @@ const LeftSidebar = ({ token }) => {
           </div>
         </div>
 
-        <div className="sidebar__playlist-container">{content}</div>
+        <div className="sidebar__playlist-container">
+          <h3>Playlisty</h3>
+          {content}
+          <h3>Albumy</h3>
+          {content2}
+        </div>
       </div>
     </div>
   );
 };
 
-export { LeftSidebar };
+export { LeftSidebar, playlistAlbumRefetch };

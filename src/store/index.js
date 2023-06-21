@@ -4,12 +4,14 @@ import { albumsApi } from './apis/albumsApi'
 import { uriReducer, changeId, changePlay } from './slices/uriSlice'
 import { songReducer, changeSong } from './slices/songSlice'
 import { searchReducer, changeSearch } from './slices/searchSlice'
+import { categoryReducer, changeCategory } from './slices/categorySlice'
 
 export const store = configureStore({
   reducer: {
     uri: uriReducer,
     song: songReducer,
     search: searchReducer,
+    category: categoryReducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -40,6 +42,14 @@ export {
   useFetchAuthorQuery,
   useCheckAuthorAlbumsQuery,
   useFetchRelatedAuthorsQuery,
+  useSavePlaylistMutation,
+  useSaveAlbumMutation,
+  useFetchUserAlbumsQuery,
+  useGetCurrentUserQuery,
+  useCheckUserFollowPlaylistQuery,
+  useRemovePlaylistMutation,
+  useRemoveAlbumMutation,
+  useCheckUserFollowAlbumQuery,
 } from './apis/albumsApi'
 
-export { changeId, changeSong, changePlay, changeSearch }
+export { changeId, changeSong, changePlay, changeSearch, changeCategory }

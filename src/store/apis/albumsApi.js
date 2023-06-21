@@ -5,6 +5,9 @@ const albumsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.spotify.com/v1',
   }),
+  // refetchOnFocus: true,
+  // refetchOnReconnect: true,
+  refetchOnMountOrArgChange: true,
 
   endpoints(builder) {
     return {
@@ -18,11 +21,12 @@ const albumsApi = createApi({
             },
             params: {
               country: 'PL',
-              limit: '7',
+              // limit: '7',
             },
           }
         },
       }),
+
       fetchFeaturedPlaylists: builder.query({
         query: (token) => {
           return {
@@ -50,6 +54,7 @@ const albumsApi = createApi({
             params: {},
           }
         },
+        providesTags: ['/me/playlists'],
       }),
       fetchPlaylistSongs: builder.query({
         query: ({ token, id }) => {
@@ -241,6 +246,45 @@ const albumsApi = createApi({
         },
       }),
 
+      fetchUserAlbums: builder.query({
+        query: (token) => {
+          return {
+            url: '/me/albums',
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        },
+      }),
+
+      getCurrentUser: builder.query({
+        query: (token) => {
+          return {
+            url: `/me`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        },
+      }),
+
+      checkUserFollowPlaylist: builder.query({
+        query: ({ token, playlistId, userId }) => {
+          return {
+            url: `/playlists/${playlistId}/followers/contains`,
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: userId,
+            },
+          }
+        },
+      }),
+
       playClickedSong: builder.mutation({
         query: ({ uri, token, context }) => {
           return {
@@ -302,6 +346,73 @@ const albumsApi = createApi({
           }
         },
       }),
+
+      CheckUserFollowAlbum: builder.query({
+        query: ({ token, albumId }) => {
+          return {
+            url: '/me/albums/contains',
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: albumId,
+            },
+          }
+        },
+      }),
+      savePlaylist: builder.mutation({
+        query: ({ token, playlistOrAlbumId }) => {
+          return {
+            url: `/playlists/${playlistOrAlbumId}/followers`,
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        },
+      }),
+
+      saveAlbum: builder.mutation({
+        query: ({ token, playlistOrAlbumId }) => {
+          return {
+            url: '/me/albums',
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: playlistOrAlbumId,
+            },
+          }
+        },
+      }),
+      removePlaylist: builder.mutation({
+        query: ({ token, playlistOrAlbumId }) => {
+          return {
+            url: `/playlists/${playlistOrAlbumId}/followers`,
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        },
+      }),
+
+      removeAlbum: builder.mutation({
+        query: ({ token, playlistOrAlbumId }) => {
+          return {
+            url: '/me/albums',
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              ids: playlistOrAlbumId,
+            },
+          }
+        },
+      }),
     }
   },
 })
@@ -327,5 +438,13 @@ export const {
   useFetchAuthorQuery,
   useCheckAuthorAlbumsQuery,
   useFetchRelatedAuthorsQuery,
+  useSavePlaylistMutation,
+  useSaveAlbumMutation,
+  useFetchUserAlbumsQuery,
+  useGetCurrentUserQuery,
+  useCheckUserFollowPlaylistQuery,
+  useRemovePlaylistMutation,
+  useRemoveAlbumMutation,
+  useCheckUserFollowAlbumQuery,
 } = albumsApi
 export { albumsApi }

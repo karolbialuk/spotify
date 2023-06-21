@@ -14,9 +14,11 @@ const LoginButton = () => {
     "playlist-read-private",
     "user-library-read",
     "user-library-modify",
+    "playlist-modify-public",
+    "playlist-modify-private",
   ];
   const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
-  const CLIENT_ID = "ca7f379f2e7e42d5af1e29834f9483bd";
+  const CLIENT_ID = "ea9a91250949498f8bdd214e14bc26cd";
   const SPOTIFY_AUTHORIZE_ENDPOINT = "https:/accounts.spotify.com/authorize";
   const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/home";
   const handleLogin = () => {

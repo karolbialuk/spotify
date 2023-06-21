@@ -3,9 +3,11 @@ import "./MainFirstBlock.scss";
 import { AiFillHeart } from "react-icons/ai";
 import FirstBlockItem from "./FirstBlockItem";
 import { Link } from "react-router-dom";
+import { useFetchFeaturedPlaylistsQuery } from "../../store";
 
 const MainFirstBlock = ({ token, query }) => {
   const { data, error, isFetching } = query(token);
+
   let content;
   if (isFetching) {
     content = <div>Ładowanie</div>;

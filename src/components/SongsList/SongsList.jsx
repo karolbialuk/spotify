@@ -4,7 +4,7 @@ import { BsClock } from "react-icons/bs";
 import SongListItem from "./SongListItem";
 import { useLocation } from "react-router-dom";
 
-const SongsList = ({ data, token, albumInfo }) => {
+const SongsList = ({ data, token, albumInfo, refetch }) => {
   const location = useLocation();
   let number = 0;
   let content;
@@ -31,6 +31,7 @@ const SongsList = ({ data, token, albumInfo }) => {
           <SongListItem
             key={song.id}
             token={token}
+            refetch={refetch}
             song={song}
             albumInfo={albumInfo}
             number={(number += 1)}

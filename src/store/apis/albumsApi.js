@@ -57,9 +57,9 @@ const albumsApi = createApi({
         providesTags: ['/me/playlists'],
       }),
       fetchPlaylistSongs: builder.query({
-        query: ({ token, id }) => {
+        query: ({ token, playlistId }) => {
           return {
-            url: `playlists/${id}/tracks`,
+            url: `/playlists/${playlistId}/tracks`,
             method: 'GET',
             headers: {
               Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const albumsApi = createApi({
       fetchPlaylistInfo: builder.query({
         query: ({ token, id }) => {
           return {
-            url: `playlists/${id}`,
+            url: `/playlists/${id}`,
             method: 'GET',
             headers: {
               Authorization: `Bearer ${token}`,
@@ -432,13 +432,28 @@ const albumsApi = createApi({
       addImgToPlaylist: builder.mutation({
         query: ({ token, playlistId, imgUrl }) => {
           return {
-            url: `v1/playlists/${playlistId}/images`,
+            url: `/playlists/${playlistId}/images`,
             method: 'POST',
             headers: {
               Authorization: `Bearer ${token}`,
             },
             body: {
               imgUrl,
+            },
+          }
+        },
+      }),
+
+      addItemToPlaylist: builder.mutation({
+        query: ({ token, playlistId, songId }) => {
+          return {
+            url: `/playlists/${playlistId}/tracks`,
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              uris: songId,
             },
           }
         },
@@ -478,5 +493,6 @@ export const {
   useCheckUserFollowAlbumQuery,
   useCreatePlaylistMutation,
   useAddImgToPlaylistMutation,
+  useAddItemToPlaylistMutation,
 } = albumsApi
 export { albumsApi }

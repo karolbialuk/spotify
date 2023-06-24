@@ -52,6 +52,7 @@ export {
   useCheckUserFollowAlbumQuery,
   useCreatePlaylistMutation,
   useAddImgToPlaylistMutation,
+  useAddItemToPlaylistMutation,
 } from './apis/albumsApi'
 
 export { changeId, changeSong, changePlay, changeSearch, changeCategory }

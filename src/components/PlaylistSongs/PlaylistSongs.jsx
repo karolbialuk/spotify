@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import "./PlaylistSongs.scss";
-import { BsFillTriangleFill } from "react-icons/bs";
+import { BsFillTriangleFill, BsChevronRight } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { SongsList } from "../SongsList/SongsList";
@@ -10,6 +10,7 @@ import {
   useFetchPlaylistSongsQuery,
   useFetchAlbumInfoQuery,
   useFetchAlbumSongsQuery,
+  useFetchUserPlaylistsQuery,
   usePlayClickedSongMutation,
   useSavePlaylistMutation,
   useSaveAlbumMutation,
@@ -43,14 +44,10 @@ const PlaylistSongs = ({ token, devices }) => {
 
   const href = location.pathname.split("/")[1];
 
-  const { data, isFetching, error } = useFetchPlaylistInfoQuery({
+  const { data, isFetching, error, refetch } = useFetchPlaylistInfoQuery({
     token,
     id,
   });
-
-  console.log({ tojestdata: data });
-
-  console.log({ playlistinfo: data });
 
   const {
     data: data2 = data,
@@ -74,6 +71,10 @@ const PlaylistSongs = ({ token, devices }) => {
     token,
     albumId,
   });
+
+  const { data: userPlaylists = data } = useFetchUserPlaylistsQuery(token);
+
+  console.log({ essssa: userPlaylists });
 
   useEffect(() => {
     if (href === "playlist" && data) {
@@ -147,6 +148,21 @@ const PlaylistSongs = ({ token, devices }) => {
     playlistAlbumRefetch();
   };
 
+  const handleClick = () => {
+    const el = document.getElementById("btn-third-container");
+    el.classList.toggle("active");
+  };
+
+  const handleClick2 = () => {
+    const el = document.getElementById("btn-third-inside-element");
+    el.classList.toggle("active");
+  };
+
+  const handleRemove = () => {
+    const el = document.getElementById("btn-third-container");
+    el.classList.add("active");
+  };
+
   if (
     (isFetching && href === "playlist") ||
     (isFetching2 && href === "album")
@@ -163,13 +179,13 @@ const PlaylistSongs = ({ token, devices }) => {
               )} */}
 
               {href === "playlist"
-                ? data?.images[0] && <img src={data?.images[0].url} />
+                ? data?.images[0] && <img src={data?.images[0]?.url} />
                 : href === "album"
-                ? data2?.images[0] && <img src={data2?.images[0].url} />
+                ? data2?.images[0] && <img src={data2?.images[0]?.url} />
                 : ""}
 
-              {data.images.length === 0 && href === "playlist" && (
-                <img src={data3?.images[0].url} />
+              {data?.images?.length === 0 && href === "playlist" && (
+                <img src={data3?.images[0]?.url} />
               )}
             </div>
             <div className="playlist-songs__text">
@@ -205,6 +221,7 @@ const PlaylistSongs = ({ token, devices }) => {
           </div>
           <SongsList
             data={href === "playlist" ? data : data2}
+            refetch={href === "playlist" ? refetch : ""}
             isFetching={href === "playlist" ? isFetching : isFetching2}
             error={href === "playlist" ? error : error2}
             albumInfo={fetchInfoData}

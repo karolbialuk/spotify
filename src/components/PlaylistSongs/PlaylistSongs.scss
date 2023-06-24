@@ -77,7 +77,86 @@
     }
 
     & &__btn-third{
+        
+    }
 
+    & &__btn-third.active{
+        display: none;
+    }
+
+    & &__btn-third-container{
+        background: #3d3c3c;
+        max-width: 140px;
+        width: 100%;
+        position: absolute;
+        border-radius: 3px;
+        padding: 10px;
+        
+    }
+
+   
+
+    & &__btn-third-container.active{
+        display: none;
+        
+    }
+
+    & &__btn-third-element{
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+    }
+
+    
+    & &__btn-third-inside-element{
+        background: #3d3c3c;
+        margin-left: 10px;
+        max-width: 100px;
+        width: 100%;
+        border-radius: 3px;
+        position: absolute;
+        left: 155px;
+        top: 0px;
+        
+    }
+
+    & &__btn-third-inside-element.active{
+        display: none;
+    }
+
+    & &__btn-third-option{
+        cursor: pointer;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    & &__btn-third-option::after{
+    //    background: red;
+        width: 50px;
+        content: '';
+       position: absolute;
+       left: 160px;
+       height: 35px;
+    }
+
+    & &__btn-third-text{
+        padding: 6px 5px;
+        white-space: nowrap;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+       
+        &:hover{
+            background: rgb(39, 38, 38);
+            cursor: pointer;
+            border-radius: 3px;
+        }
     }
 
     & &__buttons{

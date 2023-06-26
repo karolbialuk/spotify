@@ -10,7 +10,7 @@ const LoginPage = () => {
         <div className="login-page__container">
           <div className="login-page__elements">
             <div className="login-page__text">
-              <h1>Moja wersja Spotify</h1>
+              <h1>Moja muzyka</h1>
               <h2>Aby z niej korzystać musisz mieć premium!</h2>
             </div>
             <LoginButton />

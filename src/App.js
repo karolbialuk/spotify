@@ -9,7 +9,6 @@ import {
   AuthorPage,
 } from './pages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LeftSidebar, Navbar, Player } from './components'
 
 import './index.scss'
 
@@ -42,44 +41,6 @@ const App = () => {
   useEffect(() => {
     setToken(localStorage.getItem('accessToken'))
   }, [window.location.hash])
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/home"
-          element={<HomePage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route
-          path="/playlist/:id"
-          element={<PlaylistPage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route
-          path="/album/:id"
-          element={<PlaylistPage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route
-          path="/favourite"
-          element={
-            <FavouritePage token={localStorage.getItem('accessToken')} />
-          }
-        />
-        <Route
-          path="/search"
-          element={<SearchPage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route
-          path="/category/:id"
-          element={<CategoryPage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route
-          path="/author/:id"
-          element={<AuthorPage token={localStorage.getItem('accessToken')} />}
-        />
-        <Route path="/" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
-  )
 }
 
 export default App

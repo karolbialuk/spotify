@@ -20,7 +20,7 @@ const LoginButton = () => {
   const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
   const CLIENT_ID = "ea9a91250949498f8bdd214e14bc26cd";
   const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-  const REDIRECT_URL_AFTER_LOGIN = "https://mojespotify.netlify.app/home";
+  const REDIRECT_URL_AFTER_LOGIN = "https://main--mojespotify.netlify.app/home";
   const handleLogin = () => {
     window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
   };

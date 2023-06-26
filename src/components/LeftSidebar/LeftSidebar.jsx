@@ -1,35 +1,30 @@
-import { React, useEffect, useState, useRef } from "react";
+import { React, useRef } from "react";
 import "./LeftSidebar.scss";
 import { sidebarLogo } from "../../assets/images/index";
 import { AiOutlineHome, AiFillPlusSquare } from "react-icons/ai";
 import { SlMagnifier } from "react-icons/sl";
-import { BiLibrary } from "react-icons/bi";
 import { BsFillBagHeartFill } from "react-icons/bs";
 import LeftSidePlaylists from "./LeftSidePlaylists";
 import {
   useFetchUserPlaylistsQuery,
   useFetchUserAlbumsQuery,
-  changeRefresh,
   useGetCurrentUserQuery,
   useCreatePlaylistMutation,
-  useAddImgToPlaylistMutation,
 } from "../../store";
 import { Link } from "react-router-dom";
 
 let playlistAlbumRefetch;
 const LeftSidebar = ({ token }) => {
-  const { data, error, isFetching, refetch } =
-    useFetchUserPlaylistsQuery(token);
+  const { data, isFetching, refetch } = useFetchUserPlaylistsQuery(token);
 
   const {
     data: data2 = data,
     isFetching: isFetching2 = isFetching,
-    error: error2 = error,
     refetch: refetch2 = refetch,
   } = useFetchUserAlbumsQuery(token);
 
   const { data: user = data } = useGetCurrentUserQuery(token);
-  const [createPlaylist, createPlaylistResults] = useCreatePlaylistMutation();
+  const [createPlaylist] = useCreatePlaylistMutation();
 
   playlistAlbumRefetch = () => {
     refetch();
@@ -90,7 +85,7 @@ const LeftSidebar = ({ token }) => {
       <div className="sidebar__container">
         <div className="sidebar__logo">
           <Link to="/home">
-            <img src={sidebarLogo} />
+            <img src={sidebarLogo} alt="logo" />
           </Link>
         </div>
         <div className="sidebar__elements-container">

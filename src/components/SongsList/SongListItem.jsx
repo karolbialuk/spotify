@@ -223,13 +223,18 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
           <div className="songs-list__title-img">
             {href === "playlist" || href === "favourite"
               ? song?.track?.album?.images[2] && (
-                  <img src={song?.track?.album?.images[2]?.url} />
+                  <img
+                    src={song?.track?.album?.images[2]?.url}
+                    alt={song?.id}
+                  />
                 )
               : href === "author"
               ? song?.album?.images[2] && (
                   <img src={song?.album?.images[2]?.url} />
                 )
-              : albumInfo?.images[2] && <img src={albumInfo?.images[2]?.url} />}
+              : albumInfo?.images[2] && (
+                  <img src={albumInfo?.images[2]?.url} alt={albumInfo?.id} />
+                )}
           </div>
           <div className="songs-list__title-text">
             <h1>

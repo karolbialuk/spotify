@@ -25,15 +25,13 @@ import { playlistAlbumRefetch } from "../LeftSidebar/LeftSidebar";
 
 const PlaylistSongs = ({ token, devices }) => {
   const [id, setId] = useState("");
-  const [fetch, setFetch] = useState(true);
   const [fetchInfoData, setFetchInfoData] = useState();
-  const [dataSongs, setDataSongs] = useState();
   const [isActive, setIsActive] = useState();
 
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const [playSong, playSongResults] = usePlayClickedSongMutation();
+  const [playSong] = usePlayClickedSongMutation();
 
   useEffect(() => {
     const playlistId = location.pathname.split("/")[2];
@@ -114,10 +112,10 @@ const PlaylistSongs = ({ token, devices }) => {
     }
   };
 
-  const [savePlaylist, savePlaylistResults] = useSavePlaylistMutation();
+  const [savePlaylist] = useSavePlaylistMutation();
   const [saveAlbum, saveAlbumResults] = useSaveAlbumMutation();
-  const [removePlaylist, removePlaylistResults] = useRemovePlaylistMutation();
-  const [removeAlbum, removeAlbumResults] = useRemoveAlbumMutation();
+  const [removePlaylist] = useRemovePlaylistMutation();
+  const [removeAlbum] = useRemoveAlbumMutation();
 
   const handleSavePlaylistOrAlbum = async () => {
     const el = document.getElementById("likebtn");
@@ -146,21 +144,6 @@ const PlaylistSongs = ({ token, devices }) => {
     playlistAlbumRefetch();
   };
 
-  const handleClick = () => {
-    const el = document.getElementById("btn-third-container");
-    el.classList.toggle("active");
-  };
-
-  const handleClick2 = () => {
-    const el = document.getElementById("btn-third-inside-element");
-    el.classList.toggle("active");
-  };
-
-  const handleRemove = () => {
-    const el = document.getElementById("btn-third-container");
-    el.classList.add("active");
-  };
-
   if (
     (isFetching && href === "playlist") ||
     (isFetching2 && href === "album")
@@ -172,18 +155,18 @@ const PlaylistSongs = ({ token, devices }) => {
         <div className="playlist-songs__container">
           <div className="playlist-songs__header">
             <div className="playlist-songs__img">
-              {/* {fetchInfoData.images[0] && (
-                <img src={fetchInfoData.images[0].url} />
-              )} */}
-
               {href === "playlist"
-                ? data?.images[0] && <img src={data?.images[0]?.url} />
+                ? data?.images[0] && (
+                    <img src={data?.images[0]?.url} alt={data?.id} />
+                  )
                 : href === "album"
-                ? data2?.images[0] && <img src={data2?.images[0]?.url} />
+                ? data2?.images[0] && (
+                    <img src={data2?.images[0]?.url} alt={data2?.id} />
+                  )
                 : ""}
 
               {data?.images?.length === 0 && href === "playlist" && (
-                <img src={data3?.images[0]?.url} />
+                <img src={data3?.images[0]?.url} alt={data3?.id} />
               )}
             </div>
             <div className="playlist-songs__text">

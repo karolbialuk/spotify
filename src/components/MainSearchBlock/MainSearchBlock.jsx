@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./MainSearchBlock.scss";
 import { SearchBlockItem } from "./SearchBlockItem";
 import { useFetchCategoriesQuery } from "../../store";
@@ -7,22 +7,20 @@ import { useSelector } from "react-redux";
 import {
   useFetchSearchItemsQuery,
   useFetchCategoryPlaylistsQuery,
+  useFetchAlbumInfoQuery,
 } from "../../store";
+import axios from "axios";
 import { MainSecondBlock } from "../MainSecondBlock/MainSecondBlock";
 import { SearchBlockItem2 } from "./SearchBlockItem2";
+import { SearchSongListItem } from "./SearchSongListItem";
 
 const MainSearchBlock = ({ token }) => {
   const { data, isFetching, error } = useFetchCategoriesQuery(token);
 
+  let number = 0;
   const search = useSelector((state) => {
     return state.search.search;
   });
-
-  function millisToMinutesAndSeconds(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  }
 
   const {
     data: data2 = data,
@@ -34,6 +32,7 @@ const MainSearchBlock = ({ token }) => {
     data: data3 = data,
     isFetching: isFetching3 = isFetching,
     error: error3 = error,
+    refetch,
   } = useFetchSearchItemsQuery({ token, search, type: "track" });
 
   let content;
@@ -48,19 +47,26 @@ const MainSearchBlock = ({ token }) => {
       data2.albums &&
       data2.albums.items.map((album) => {
         return (
-          <div className="main-search-block__content1-container">
-            <div className="main-search-block__content1-img">
-              <img src={album.images && album.images[1].url} alt={album.name} />
+          <Link className="main-search-block__link" to={"/album/" + album.id}>
+            <div className="main-search-block__content1-container">
+              <div className="main-search-block__content1-img">
+                <img
+                  src={album.images && album.images[1].url}
+                  alt={album.name}
+                />
+              </div>
+              <div className="main-search-block__content1-name">
+                {album.name}
+              </div>
+              <div className="main-search-block__content1-author">
+                {"Autor: "}
+                {album.artists &&
+                  album.artists.map((artist) => {
+                    return artist.name;
+                  })}
+              </div>
             </div>
-            <div className="main-search-block__content1-name">{album.name}</div>
-            <div className="main-search-block__content1-author">
-              {"Autor: "}
-              {album.artists &&
-                album.artists.map((artist) => {
-                  return artist.name;
-                })}
-            </div>
-          </div>
+          </Link>
         );
       });
 
@@ -69,31 +75,12 @@ const MainSearchBlock = ({ token }) => {
         {data3.tracks &&
           data3.tracks.items.slice(0, 4).map((track) => {
             return (
-              <div className="main-search-block__content2-container-element">
-                <div className="main-search-block__content2-img-container">
-                  <div className="main-search-block__content2-img">
-                    <img src={track.album && track.album.images[2].url} />
-                  </div>
-
-                  <div className="main-search-block__content2-text-container">
-                    <div className="main-search-block__content2-text-first">
-                      {track.name}
-                    </div>
-                    <div className="main-search-block__content2-text-second">
-                      {track.artists
-                        .slice(0, 10)
-                        .map((artist, index) => {
-                          return artist.name;
-                        })
-                        .join(", ")}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="main-search-block__content2-time">
-                  {millisToMinutesAndSeconds(track.duration_ms)}
-                </div>
-              </div>
+              <SearchSongListItem
+                track={track}
+                token={token}
+                refetch={refetch}
+                search={search}
+              />
             );
           })}
       </div>
@@ -105,7 +92,11 @@ const MainSearchBlock = ({ token }) => {
         return (
           <>
             <Link to={"/category/" + category.id}>
-              <SearchBlockItem key={category.id} category={category} />
+              <SearchBlockItem
+                key={category.id}
+                category={category}
+                search={search}
+              />
             </Link>
           </>
         );
@@ -142,7 +133,7 @@ const MainSearchBlock = ({ token }) => {
           search={search}
           type={"playlist"}
         />
-        <MainSecondBlock
+        {/* <MainSecondBlock
           token={token}
           title={"Podcasty"}
           query={useFetchSearchItemsQuery}
@@ -155,7 +146,7 @@ const MainSearchBlock = ({ token }) => {
           query={useFetchSearchItemsQuery}
           search={search}
           type={"episode"}
-        />
+        /> */}
       </div>
     );
   } else {

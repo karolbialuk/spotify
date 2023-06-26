@@ -1,22 +1,40 @@
 import { React, useState } from "react";
 import "./Navbar.scss";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { BiBold } from "react-icons/bi";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { changeSearch } from "../../store";
-const Navbar = () => {
-  const location = useLocation();
+import { useGetCurrentUserQuery } from "../../store";
+
+const Navbar = ({ token }) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
+
+  const { data } = useGetCurrentUserQuery(token);
 
   const searchHandler = (e) => {
     setSearch(e.target.value);
     dispatch(changeSearch(e.target.value));
   };
 
-  console.log(search);
+  const goBack = () => {
+    window.history.back();
+  };
+
+  const goForward = () => {
+    window.history.forward();
+  };
+
+  const handleClick = () => {
+    const element = document.getElementById("user-element-options");
+    element.classList.toggle("active");
+  };
+
+  const handleLogout = () => {
+    handleClick();
+    localStorage.removeItem("accessToken");
+    window.location.href = "/";
+  };
 
   if (window.location.pathname === "/search") {
     return (
@@ -39,19 +57,36 @@ const Navbar = () => {
         <div className="navbar__container">
           <div className="navbar__arrows">
             <div className="navbar__arrow-left">
-              <AiOutlineLeft />
+              <AiOutlineLeft onClick={goBack} />
             </div>
             <div className="navbar__arrow-right">
-              <AiOutlineRight />
+              <AiOutlineRight onClick={goForward} />
             </div>
           </div>
           <div className="navbar__user-element">
-            <div className="navbar__user-element-left"></div>
+            <div className="navbar__user-element-left">
+              <img src={data?.images[0].url} alt={data?.display_name} />
+            </div>
             <div className="navbar__user-element-center">
-              <h3>Karol Bialuk</h3>
+              <h3>{data?.display_name}</h3>
             </div>
             <div className="navbar__user-element-right">
-              <RiArrowDropDownFill size={50} />
+              <RiArrowDropDownFill
+                onClick={handleClick}
+                className="navbar__user-element-right-icon"
+                size={50}
+              />
+            </div>
+            <div
+              id="user-element-options"
+              className="navbar__user-element-options"
+            >
+              <div
+                onClick={handleLogout}
+                className="navbar__user-element-option"
+              >
+                Wyloguj
+              </div>
             </div>
           </div>
         </div>

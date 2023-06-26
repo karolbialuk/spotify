@@ -1,10 +1,6 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import "./PlaylistPage.scss";
 import { LeftSidebar, Navbar, Player, PlaylistSongs } from "../../components";
-import { useFetchDevicesQuery } from "../../store";
-import { Location, useLocation } from "react-router-dom";
-import { useActivateDeviceMutation } from "../../store";
-import axios from "axios";
 
 const PlaylistPage = ({ token }) => {
   if (localStorage.getItem("accessToken")) {
@@ -13,7 +9,7 @@ const PlaylistPage = ({ token }) => {
         <div className="root">
           <LeftSidebar token={token} />
           <div className="root__main-container">
-            <Navbar />
+            <Navbar token={token} />
             <PlaylistSongs token={token} />
           </div>
         </div>
@@ -21,7 +17,7 @@ const PlaylistPage = ({ token }) => {
       </>
     );
   } else {
-    window.location.replace("/");
+    window.location.href = "/";
   }
 };
 

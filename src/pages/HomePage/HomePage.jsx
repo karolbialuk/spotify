@@ -15,7 +15,7 @@ const HomePage = ({ token }) => {
         <div className="root">
           <LeftSidebar token={token} />
           <div className="root__main-container">
-            <Navbar />
+            <Navbar token={token} />
             <MainElements token={token} />
           </div>
         </div>
@@ -23,7 +23,7 @@ const HomePage = ({ token }) => {
       </>
     );
   } else {
-    window.location.replace("/");
+    window.location.href = "/";
   }
 };
 

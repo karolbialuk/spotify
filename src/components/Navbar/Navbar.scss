@@ -1,12 +1,14 @@
 .navbar{
     position: sticky;
     top: 0;
-    width: 100%;
+    
     
 
 
     & &__container{
         background-color: rgb(72, 32, 176);
+        
+        
         height: 8vh;
         display: flex;
         align-items: center;
@@ -70,6 +72,11 @@
         background: #000000;
         border-radius: 50px;
         height: 100%;
+
+        img{
+            width: 100%;
+            border-radius: 50px;
+        }
     }
 
     & &__user-element-right{
@@ -79,7 +86,45 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+
+       
+
+        
     }
+
+    & &__user-element-right-icon{
+        
+    }
+
+
+    & &__user-element-options{
+        display: none;
+        position: absolute;
+        font-size: 0.8rem;
+        text-align: center;
+        top: 65px;
+        right: 40px;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100px;
+        justify-content: flex-end;
+        background: #5a5a5a;
+
+        &:hover{
+            background-color: #414141;
+        }
+    }
+
+    & &__user-element-options.active{
+        display: flex;
+        justify-content: center;
+    }
+
+    & &__user-element-option{
+        cursor: pointer;
+    }
+
 
 
 }

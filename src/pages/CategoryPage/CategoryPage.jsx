@@ -16,7 +16,7 @@ const CategoryPage = ({ token }) => {
         <div className="root">
           <LeftSidebar token={token} />
           <div className="root__main-container">
-            <Navbar />
+            <Navbar token={token} />
             <CategoryElements token={token} />
           </div>
         </div>
@@ -24,7 +24,7 @@ const CategoryPage = ({ token }) => {
       </>
     );
   } else {
-    window.location.replace("/");
+    window.location.href = "/";
   }
 };
 

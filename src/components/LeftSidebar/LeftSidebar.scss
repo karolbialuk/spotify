@@ -1,11 +1,16 @@
 .sidebar{
         background: black;
-        width: 280px;
+        max-width: 12vw;
+        min-width: 180px;
+        width: 100%;
+        
+        
     
     & &__container{
         position: sticky;
         top: 25px;
         margin: 25px 25px;
+        
     }
 
     & &__logo{

@@ -13,6 +13,7 @@
     & &__container{
         display: grid;
         gap: 25px;
+        // grid-template-columns: repeat(auto-fill, minmax(375px, 1fr));
         grid-template-columns: 1fr 1fr 1fr;
 
        
@@ -55,5 +56,23 @@
         margin-left: 10px;
         width: 75%;
         text-decoration: none;
+    }
+}
+
+@media(max-width: 1000px){
+    .main-first-block{
+
+        & &__container{
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}
+
+@media(max-width: 790px){
+    .main-first-block{
+
+        & &__container{
+            grid-template-columns: 1fr;
+        }
     }
 }

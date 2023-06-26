@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   usePlayClickedSongMutation,
@@ -7,13 +7,11 @@ import {
   useFetchUserPlaylistsQuery,
   useGetCurrentUserQuery,
   useAddItemToPlaylistMutation,
-  useFetchPlaylistSongsQuery,
-  useRemoveAlbumMutation,
 } from "../../store";
 import { changeId, changePlay } from "../../store";
-import { AiFillHeart, AiOutlineConsoleSql } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { BsFillTriangleFill, BsChevronLeft } from "react-icons/bs";
+import { BsChevronLeft } from "react-icons/bs";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
@@ -29,17 +27,11 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
   let id =
     href === "playlist" || href === "favourite" ? song?.track?.id : song?.id;
 
-  const [playSong, playSongResults] = usePlayClickedSongMutation();
-  const [likeSong, likeSongResults] = useLikeSongMutation();
-  const [removeSong, removeSongResults] = useRemoveSongMutation();
-  const [addSongToPlaylist, addSongToPlaylistResults] =
-    useAddItemToPlaylistMutation();
+  const [playSong] = usePlayClickedSongMutation();
+  const [likeSong] = useLikeSongMutation();
+  const [removeSong] = useRemoveSongMutation();
+  const [addSongToPlaylist] = useAddItemToPlaylistMutation();
 
-  const [removeSongFromPlaylist, removeSongFromPlaylistResults] =
-    useRemoveSongMutation();
-
-  // const { data, isFetching, error } = useCheckSavedSongsQuery({ token, id });
-  const [idToChange, setidToChange] = useState();
   const [checkedData, setCheckedData] = useState([]);
 
   useEffect(() => {
@@ -126,7 +118,7 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 
-  const { data, isFetching, error } = useFetchUserPlaylistsQuery(token);
+  const { data } = useFetchUserPlaylistsQuery(token);
 
   const { data: data3 } = useGetCurrentUserQuery(token);
 
@@ -234,8 +226,10 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
                   <img src={song?.track?.album?.images[2]?.url} />
                 )
               : href === "author"
-              ? song.album.images[2] && <img src={song.album.images[2].url} />
-              : albumInfo.images[2] && <img src={albumInfo.images[2].url} />}
+              ? song?.album?.images[2] && (
+                  <img src={song?.album?.images[2]?.url} />
+                )
+              : albumInfo?.images[2] && <img src={albumInfo?.images[2]?.url} />}
           </div>
           <div className="songs-list__title-text">
             <h1>
@@ -261,9 +255,11 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
           </div>
         </div>
         <div className="songs-list__album">
-          {href === "playlist" || href === "favourite"
-            ? song?.track?.album?.name
-            : ""}
+          <div>
+            {href === "playlist" || href === "favourite"
+              ? song?.track?.album?.name
+              : ""}
+          </div>
         </div>
         <div className="songs-list__time">
           <button
@@ -348,4 +344,4 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
   }
 };
 
-export default SongListItem;
+export { SongListItem };

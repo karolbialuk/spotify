@@ -9,7 +9,7 @@ const SearchPage = ({ token }) => {
         <div className="root">
           <LeftSidebar token={token} />
           <div className="root__main-container">
-            <Navbar />
+            <Navbar token={token} />
             <SearchElements token={token} />
           </div>
         </div>
@@ -17,7 +17,7 @@ const SearchPage = ({ token }) => {
       </>
     );
   } else {
-    window.location.replace("/");
+    window.location.href = "/";
   }
 };
 

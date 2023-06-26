@@ -108,12 +108,6 @@ const LeftSidebar = ({ token }) => {
               <div className="sidebar__main-element-text">Szukaj</div>
             </Link>
           </div>
-          <div className="sidebar__element">
-            <div className="sidebar__main-element-logo">
-              <BiLibrary size={25} />
-            </div>
-            <div className="sidebar__main-element-text">Biblioteka</div>
-          </div>
         </div>
 
         <div className="sidebar__elements-container">

@@ -17,7 +17,7 @@ const AuthorPage = ({ token }) => {
         <div className="root">
           <LeftSidebar token={token} />
           <div className="root__main-container">
-            <Navbar />
+            <Navbar token={token} />
             <AuthorElements token={token} />
           </div>
         </div>
@@ -25,7 +25,7 @@ const AuthorPage = ({ token }) => {
       </>
     );
   } else {
-    window.location.replace("/");
+    window.location.href = "/";
   }
 };
 

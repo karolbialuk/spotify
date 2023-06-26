@@ -1,5 +1,6 @@
 .songs-list{
-
+    
+    width: 100%;
     button{
         background: none;
         border: none;
@@ -7,10 +8,12 @@
     }
 
     & &__container{
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 15px;
-        margin: 0 25px;
+        
+        
     }
 
     
@@ -23,6 +26,7 @@
     
 
     & &__list-names{
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -37,7 +41,7 @@
         gap: 8px;
         align-items: center;
         justify-content: flex-start;
-        width: 30%;
+        width: 33%;
     }
 
     & &__bottom-arrows{
@@ -50,13 +54,13 @@
     }
 
     & &__list-second{
-        width: 30%;
+        width: 33%;
         display: flex;
         justify-content: center;
     }
 
     & &__list-third{
-        width: 40%;
+        width: 33%;
         display: flex;
         justify-content: flex-end;
     }
@@ -69,9 +73,10 @@
     & &__title{
         display: flex;
         gap: 15px;
+        width: 33%;
+        min-width: 200px;
         align-items: center;
         justify-content: flex-start;
-        width: 30%;
 
         h1{
             font-size: 0.9rem;
@@ -96,15 +101,10 @@
 
     }
 
-    & &__title-text{
-        display: flex;
-        flex-direction: column;
-        width: 85%;
-        gap: 5px;
-    }
-
+    
     & &__album{
-        width: 15%;
+        width: 33%;
+        min-width: 150px;
         display: flex;
         justify-content: center;
         text-align: center;
@@ -112,12 +112,20 @@
     }
 
     & &__time{
-        max-width: 600px;
-        width: 100%;
         display: flex;
+        min-width: 50px;
         justify-content: flex-end;
         margin-right: 10px;
+        width: 33%;
     }
+
+    & &__title-text{
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        gap: 5px;
+    }
+
 
     & &__like{
         width: 50px;
@@ -136,7 +144,6 @@
     }
 
     & &__time-element{
-        width: 30px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -148,7 +155,7 @@
         align-items: center;
         justify-content: space-between;
         color: #fff;
-        width: 100%;
+        
         cursor: pointer;
    
         &:hover{
@@ -262,7 +269,51 @@
         }
     
    
+}
 
-    
+@media(max-width: 780px){
+    .songs-list{
+
+        & &__time-element{
+            display: none;
+        }
+        
+
+        & &__title-text{
+            h1{
+                font-size: 0.7rem;
+            }
+
+            p{
+                font-size: 0.6rem;
+            }
+            
+
+        }
+
+        & &__title{
+            width: 45%;
+        }
+
+        & &__album{
+            display: none;
+        }
+
+        & &__time{
+            width: 10%;
+        }
+
+        & &__list-first{
+            width: 45%;
+        }
+
+        & &__list-second{
+            width: 45%;
+        }
+
+        & &__list-third{
+            width: 10%;
+        }
+    }
 }
 

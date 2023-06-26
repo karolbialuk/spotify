@@ -1,7 +1,7 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import "./SongsList.scss";
 import { BsClock } from "react-icons/bs";
-import SongListItem from "./SongListItem";
+import { SongListItem } from "./SongListItem";
 import { useLocation } from "react-router-dom";
 
 const SongsList = ({ data, token, albumInfo, refetch }) => {

@@ -13,11 +13,10 @@
     }
 
     & &__img{
-        min-height: 150px;
-        min-width: 150px;
+       
+        max-width: 250px;
 
-        height: 250px;
-        width: 250px;
+     
 
         img{
             width: 100%;
@@ -28,7 +27,7 @@
 
     & &__text{
 
-        width: 900px;
+        max-width: 900px;
 
         h3{
             margin: 0;
@@ -76,3 +75,18 @@
 
     }
 }
+
+@media(max-width: 800px){
+    .author-elements{
+        & &__text{
+            h1{
+                font-size: 1rem;
+            }
+        }
+
+        & &__text-bottom{
+            font-size: 0.8rem;
+        }
+    }
+}
+

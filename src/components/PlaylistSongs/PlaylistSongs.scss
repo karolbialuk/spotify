@@ -1,8 +1,11 @@
 .playlist-songs{
 
+  
+
     & &__container{
         margin: 35px;
         min-height: 100vh;
+    
     }
 
     & &__header{
@@ -13,11 +16,11 @@
     }
 
     & &__img{
-        min-height: 150px;
-        min-width: 150px;
+        // min-height: 150px;
+        max-width: 250px;
 
-        height: 250px;
-        width: 250px;
+        // height: 250px;
+        // width: 250px;
 
         img{
             width: 100%;
@@ -28,7 +31,8 @@
 
     & &__text{
 
-        width: 900px;
+        max-width: 900px;
+        width: 100%;
 
         h3{
             margin: 0;

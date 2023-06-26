@@ -1,15 +1,13 @@
 import { React, useEffect, useState } from "react";
 import "./PlaylistSongs.scss";
-import { BsFillTriangleFill, BsChevronRight } from "react-icons/bs";
+import { BsFillTriangleFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { SongsList } from "../SongsList/SongsList";
 
 import {
   useFetchPlaylistInfoQuery,
-  useFetchPlaylistSongsQuery,
   useFetchAlbumInfoQuery,
-  useFetchAlbumSongsQuery,
   useFetchUserPlaylistsQuery,
   usePlayClickedSongMutation,
   useSavePlaylistMutation,

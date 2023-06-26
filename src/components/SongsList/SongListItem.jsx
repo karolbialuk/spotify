@@ -230,7 +230,7 @@ const SongListItem = ({ song, number, token, albumInfo, refetch }) => {
                 )
               : href === "author"
               ? song?.album?.images[2] && (
-                  <img src={song?.album?.images[2]?.url} />
+                  <img src={song?.album?.images[2]?.url} alt={song?.id} />
                 )
               : albumInfo?.images[2] && (
                   <img src={albumInfo?.images[2]?.url} alt={albumInfo?.id} />

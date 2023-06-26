@@ -19,7 +19,7 @@ const LoginButton = () => {
   ];
   const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
   const CLIENT_ID = "ea9a91250949498f8bdd214e14bc26cd";
-  const SPOTIFY_AUTHORIZE_ENDPOINT = "https:/accounts.spotify.com/authorize";
+  const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
   const REDIRECT_URL_AFTER_LOGIN =
     "https://main--cool-scone-998eb2.netlify.app/home";
   const handleLogin = () => {

@@ -15,18 +15,6 @@ import {
   AuthorPage,
 } from './pages'
 
-const ParamsSpotifyAuth = (hash) => {
-  const stringAfterHashtag = hash.substring(1)
-  const paramsInUrl = stringAfterHashtag.split('&')
-  const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
-    const [key, value] = currentValue.split('=')
-    accumulater[key] = value
-    return accumulater
-  }, {})
-
-  return paramsSplitUp
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>

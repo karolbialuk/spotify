@@ -1,4 +1,4 @@
-Link live: https://mojespotify.netlify.app
+Link live: [https://mojespotify.netlify.app](https://mojamuzyka.netlify.app)
 
 Na ten moment aplikacja jest w tzw. "development mode" co oznacza, że dostęp do pełnej funkcjonalności mogą mieć tylko osoby dodane przeze mnie w dashboardzie spotify API. Podanie do Spotify aby zdjąć "development mode" jest w trakcie rozpatrywania i pozostaje delektować się samym kodem aplikacji :) Jeśli koniecznie chcesz zobaczyć jak wygląda strona live z pełnymi funkcjonalnościami, daj mi znać a dodam twój mail do użytkowników, którzy mogą mieć dostęp i wszystko będzie smigać. Poniżej kilka zdjęć prezentujących pełną funkcjonalność.
 
